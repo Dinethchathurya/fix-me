@@ -1,6 +1,1 @@
-Thanks for downloading this template!
-
-Template Name: Logis
-Template URL: https://bootstrapmade.com/logis-bootstrap-logistics-website-template/
-Author: BootstrapMade.com
-License: https://bootstrapmade.com/license/
+ This is Fix me web application project. In this project we are going to develop a web site for marketing and documentation about our mobile app.
