@@ -1,1 +1,1 @@
- This is Fix me web application project. In this project we are going to develop a web site for marketing and documentation about our mobile app.
+This is the Fix-Me web application project. In this project, we are going to develop a web site for marketing and documentation about our mobile application.
