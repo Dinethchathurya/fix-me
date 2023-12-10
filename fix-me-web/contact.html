@@ -6,6 +6,78 @@
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
   <title>Logis Bootstrap Template - Contact</title>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var form = document.getElementById("contactForm");
+
+      form.addEventListener("submit", function (event) {
+        var nameInput = form.elements["name"];
+        var emailInput = form.elements["email"];
+        var subjectInput = form.elements["subject"];
+        var messageInput = form.elements["message"];
+
+        // Validate Name
+        if (nameInput.value.trim() === "") {
+          showError(nameInput, "Name is missing! Enter a name and try again!");
+          event.preventDefault(); // Prevent the form from submitting
+        } else {
+          hideError(nameInput);
+        }
+
+        // Validate Email
+        if (emailInput.value.trim() === "" || !isValidEmail(emailInput.value.trim())) {
+          showError(emailInput, "Please enter a valid email address!");
+          event.preventDefault(); // Prevent the form from submitting
+        } else {
+          hideError(emailInput);
+        }
+
+        // Validate Subject
+        if (subjectInput.value.trim() === "") {
+          showError(subjectInput, "Subject is missing! Enter a subject and try again!");
+          event.preventDefault(); // Prevent the form from submitting
+        } else {
+          hideError(subjectInput);
+        }
+
+        // Validate Message
+        if (messageInput.value.trim() === "") {
+          showError(messageInput, "Message is missing! Enter a message and try again!");
+          event.preventDefault(); // Prevent the form from submitting
+        } else {
+          hideError(messageInput);
+        }
+      });
+
+      function isValidEmail(email) {
+        // You can use a regular expression for email validation
+        var ValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return ValidEmail.test(email);
+      }
+
+      function showError(input, errorMessage) {
+        var parent = input.parentElement;
+        var errorElement = parent.querySelector(".error-message");
+
+        if (!errorElement) {
+          errorElement = document.createElement("div");
+          errorElement.className = "error-message";
+          parent.appendChild(errorElement);
+        }
+
+        errorElement.textContent = errorMessage;
+      }
+
+      function hideError(input) {
+        var parent = input.parentElement;
+        var errorElement = parent.querySelector(".error-message");
+
+        if (errorElement) {
+          parent.removeChild(errorElement);
+        }
+      }
+    });
+  </script>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -147,7 +219,7 @@
           </div>
 
           <div class="col-lg-8">
-            <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+            <form id = "contactForm" action="forms/contact.php" method="post" role="form" class="php-email-form">
               <div class="row">
                 <div class="col-md-6 form-group">
                   <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
@@ -260,7 +332,7 @@
   <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
   <script src="assets/vendor/aos/aos.js"></script>
   <script src="assets/vendor/php-email-form/validate.js"></script>
-
+  
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
 
