@@ -6,78 +6,56 @@
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
   <title>Logis Bootstrap Template - Contact</title>
+
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-      var form = document.getElementById("contactForm");
-
-      form.addEventListener("submit", function (event) {
-        var nameInput = form.elements["name"];
-        var emailInput = form.elements["email"];
-        var subjectInput = form.elements["subject"];
-        var messageInput = form.elements["message"];
-
-        // Validate Name
+      var contactForm = document.getElementById("contactForm");
+  
+      contactForm.addEventListener("submit", function (event) {
+        var nameInput = document.getElementById("name");
+        var emailInput = document.getElementById("email");
+        var subjectInput = document.getElementById("subject");
+        var messageInput = document.getElementById("message");
+  
         if (nameInput.value.trim() === "") {
-          showError(nameInput, "Name is missing! Enter a name and try again!");
-          event.preventDefault(); // Prevent the form from submitting
-        } else {
-          hideError(nameInput);
+          console.log("Validation failed: Please enter your name.");
+          window.alert("Please enter your name.");
+          event.preventDefault();
+          return false;
         }
-
-        // Validate Email
-        if (emailInput.value.trim() === "" || !isValidEmail(emailInput.value.trim())) {
-          showError(emailInput, "Please enter a valid email address!");
-          event.preventDefault(); // Prevent the form from submitting
-        } else {
-          hideError(emailInput);
+  
+        if (emailInput.value.trim() === "") {
+          console.log("Validation failed: Please enter your email.");
+          window.alert("Please enter your email.");
+          event.preventDefault();
+          return false;
         }
-
-        // Validate Subject
+  
+        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(emailInput.value.trim())) {
+          console.log("Validation failed: Please enter a valid email address.");
+          window.alert("Please enter a valid email address.");
+          event.preventDefault();
+          return false;
+        }
+  
         if (subjectInput.value.trim() === "") {
-          showError(subjectInput, "Subject is missing! Enter a subject and try again!");
-          event.preventDefault(); // Prevent the form from submitting
-        } else {
-          hideError(subjectInput);
+          console.log("Validation failed: Please enter the subject.");
+          window.alert("Please enter the subject.");
+          event.preventDefault();
+          return false;
         }
-
-        // Validate Message
+  
         if (messageInput.value.trim() === "") {
-          showError(messageInput, "Message is missing! Enter a message and try again!");
-          event.preventDefault(); // Prevent the form from submitting
-        } else {
-          hideError(messageInput);
+          console.log("Validation failed: Please enter your message.");
+          window.alert("Please enter your message.");
+          event.preventDefault();
+          return false;
         }
       });
-
-      function isValidEmail(email) {
-        // You can use a regular expression for email validation
-        var ValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return ValidEmail.test(email);
-      }
-
-      function showError(input, errorMessage) {
-        var parent = input.parentElement;
-        var errorElement = parent.querySelector(".error-message");
-
-        if (!errorElement) {
-          errorElement = document.createElement("div");
-          errorElement.className = "error-message";
-          parent.appendChild(errorElement);
-        }
-
-        errorElement.textContent = errorMessage;
-      }
-
-      function hideError(input) {
-        var parent = input.parentElement;
-        var errorElement = parent.querySelector(".error-message");
-
-        if (errorElement) {
-          parent.removeChild(errorElement);
-        }
-      }
     });
   </script>
+
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -219,7 +197,7 @@
           </div>
 
           <div class="col-lg-8">
-            <form id = "contactForm" action="forms/contact.php" method="post" role="form" class="php-email-form">
+            <form id = "contactForm" action="forms/contact.php" method="post" role="form" class="php-email-form" novalidate>
               <div class="row">
                 <div class="col-md-6 form-group">
                   <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
@@ -234,11 +212,7 @@
               <div class="form-group mt-3">
                 <textarea class="form-control" name="message" rows="5" placeholder="Type Your Message Here" required></textarea>
               </div>
-              <div class="my-3">
-                <div class="loading">Loading</div>
-                <div class="error-message"></div>
-                <div class="sent-message">Your message has been sent. Thank you!</div>
-              </div>
+              
               <div class="text-center"><button type="submit">Send Message</button></div>
             </form>
           </div><!-- End Contact Form -->
