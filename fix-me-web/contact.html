@@ -18,37 +18,69 @@
         var messageInput = document.getElementById("message");
   
         if (nameInput.value.trim() === "") {
-          console.log("Validation failed: Please enter your name.");
-          window.alert("Please enter your name.");
+          console.log("Validation failed: Name is missing ! Please enter your name and try again !");
+          window.alert("Name is missing ! Please enter your name and try again !");
+          event.preventDefault();
+          return false;
+        }
+
+        var Validate_Name = /^[A-Za-z]+$/; 
+        if (!Validate_Name.test(nameInput.value.trim())) {
+          console.log("Validation failed: Name cannot contain any numeric values !");
+          window.alert("Name cannot contain any numeric values !");
           event.preventDefault();
           return false;
         }
   
         if (emailInput.value.trim() === "") {
-          console.log("Validation failed: Please enter your email.");
-          window.alert("Please enter your email.");
+          console.log("Validation failed: E-mail is missing ! Enter your e-mail and try again !");
+          window.alert("E-mail is missing ! Enter your e-mail and try again !");
           event.preventDefault();
           return false;
         }
   
-        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(emailInput.value.trim())) {
-          console.log("Validation failed: Please enter a valid email address.");
-          window.alert("Please enter a valid email address.");
+        var Validate_Email = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!Validate_Email.test(emailInput.value.trim())) {
+          console.log("Validation failed: Invalid e-mail address ! Enter a valid e-mail address and try again !");
+          window.alert("Invalid e-mail address ! Enter a valid e-mail address and try again !");
           event.preventDefault();
           return false;
         }
   
         if (subjectInput.value.trim() === "") {
-          console.log("Validation failed: Please enter the subject.");
-          window.alert("Please enter the subject.");
+          console.log("Validation failed: Subject is missing ! Enter a subject and try again !");
+          window.alert("Subject is missing ! Enter a subject and try again !");
+          event.preventDefault();
+          return false;
+        }
+
+        var numericRegex = /^[0-9]+$/;
+        if (numericRegex.test(subjectInput.value.trim())) {
+          console.log("Validation failed: The subject cannot be completely numeric !");
+          window.alert("The subject cannot be completely numeric !");
           event.preventDefault();
           return false;
         }
   
         if (messageInput.value.trim() === "") {
-          console.log("Validation failed: Please enter your message.");
-          window.alert("Please enter your message.");
+          console.log("Validation failed: Message is missing ! Enter a message and try again !");
+          window.alert("Message is missing ! Enter a message and try again !");
+          event.preventDefault();
+          return false;
+        }
+
+        var Maximum_Characters = 200;
+        if (messageInput.value.trim().split(/\s+/).length > Maximum_Characters) {
+          console.log("Validation failed: The message cannot exceed 200 words !");
+          window.alert("The message cannot exceed 200 words !");
+          event.preventDefault();
+          return false;
+        }
+
+        var Validate_Message = /[\/%"&]/;
+        if (Validate_Message.test(messageInput.value)) {
+          console.log("Validation failed: The message cannot contain special characters like :- (/,%,&,\").");
+          window.alert("The message cannot contain special characters like :- (/,%,&,\").");
           event.preventDefault();
           return false;
         }
@@ -211,6 +243,12 @@
               </div>
               <div class="form-group mt-3">
                 <textarea class="form-control" name="message" rows="5" placeholder="Type Your Message Here" required></textarea>
+              </div>
+
+              <div class="my-3">
+                <div class="loading">Loading</div>
+                <div class="error-message"></div>
+                <div class="sent-message">Your message has been sent. Thank you!</div>
               </div>
               
               <div class="text-center"><button type="submit">Send Message</button></div>
