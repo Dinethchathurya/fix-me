@@ -6,6 +6,88 @@
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
   <title>Logis Bootstrap Template - Contact</title>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var contactForm = document.getElementById("contactForm");
+  
+      contactForm.addEventListener("submit", function (event) {
+        var nameInput = document.getElementById("name");
+        var emailInput = document.getElementById("email");
+        var subjectInput = document.getElementById("subject");
+        var messageInput = document.getElementById("message");
+  
+        if (nameInput.value.trim() === "") {
+          console.log("Validation failed: Name is missing ! Please enter your name and try again !");
+          window.alert("Name is missing ! Please enter your name and try again !");
+          event.preventDefault();
+          return false;
+        }
+
+        var Validate_Name = /^[A-Za-z]+$/; 
+        if (!Validate_Name.test(nameInput.value.trim())) {
+          console.log("Validation failed: Name cannot contain any numeric values !");
+          window.alert("Name cannot contain any numeric values !");
+          event.preventDefault();
+          return false;
+        }
+  
+        if (emailInput.value.trim() === "") {
+          console.log("Validation failed: E-mail is missing ! Enter your e-mail and try again !");
+          window.alert("E-mail is missing ! Enter your e-mail and try again !");
+          event.preventDefault();
+          return false;
+        }
+  
+        var Validate_Email = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!Validate_Email.test(emailInput.value.trim())) {
+          console.log("Validation failed: Invalid e-mail address ! Enter a valid e-mail address and try again !");
+          window.alert("Invalid e-mail address ! Enter a valid e-mail address and try again !");
+          event.preventDefault();
+          return false;
+        }
+  
+        if (subjectInput.value.trim() === "") {
+          console.log("Validation failed: Subject is missing ! Enter a subject and try again !");
+          window.alert("Subject is missing ! Enter a subject and try again !");
+          event.preventDefault();
+          return false;
+        }
+
+        var numericRegex = /^[0-9]+$/;
+        if (numericRegex.test(subjectInput.value.trim())) {
+          console.log("Validation failed: The subject cannot be completely numeric !");
+          window.alert("The subject cannot be completely numeric !");
+          event.preventDefault();
+          return false;
+        }
+  
+        if (messageInput.value.trim() === "") {
+          console.log("Validation failed: Message is missing ! Enter a message and try again !");
+          window.alert("Message is missing ! Enter a message and try again !");
+          event.preventDefault();
+          return false;
+        }
+
+        var Maximum_Characters = 200;
+        if (messageInput.value.trim().split(/\s+/).length > Maximum_Characters) {
+          console.log("Validation failed: The message cannot exceed 200 words !");
+          window.alert("The message cannot exceed 200 words !");
+          event.preventDefault();
+          return false;
+        }
+
+        var Validate_Message = /[\/%"&]/;
+        if (Validate_Message.test(messageInput.value)) {
+          console.log("Validation failed: The message cannot contain special characters like :- (/,%,&,\").");
+          window.alert("The message cannot contain special characters like :- (/,%,&,\").");
+          event.preventDefault();
+          return false;
+        }
+      });
+    });
+  </script>
+
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -93,7 +175,7 @@
           <div class="row d-flex justify-content-center">
             <div class="col-lg-6 text-center">
               <h2>Contact</h2>
-              <p>Odio et unde deleniti. Deserunt numquam exercitationem. Officiis quo odio sint voluptas consequatur ut a odio voluptatem. Sit dolorum debitis veritatis natus dolores. Quasi ratione sint. Sit quaerat ipsum dolorem.</p>
+              <p>Get in touch with us ! We'd love to hear from you !</p>
             </div>
           </div>
         </div>
@@ -113,7 +195,7 @@
       <div class="container" data-aos="fade-up">
 
         <div>
-          <iframe style="border:0; width: 100%; height: 340px;" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12097.433213460943!2d-74.0062269!3d40.7101282!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xb89d1fe6bc499443!2sDowntown+Conference+Center!5e0!3m2!1smk!2sbg!4v1539943755621" frameborder="0" allowfullscreen></iframe>
+          <iframe style="border:0; width: 100%; height: 340px;" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1980.7912082035195!2d80.03868288858571!3d6.820533961523613!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae2523b05555555%3A0x546c34cd99f6f488!2sNSBM%20Green%20University!5e0!3m2!1sen!2slk!4v1702119457172!5m2!1sen!2slk" frameborder="0" allowfullscreen></iframe>
         </div><!-- End Google Maps -->
 
         <div class="row gy-4 mt-4">
@@ -124,7 +206,7 @@
               <i class="bi bi-geo-alt flex-shrink-0"></i>
               <div>
                 <h4>Location:</h4>
-                <p>A108 Adam Street, New York, NY 535022</p>
+                <p>Pitipana - Thalagala Road, Homagama</p>
               </div>
             </div><!-- End Info Item -->
 
@@ -132,7 +214,7 @@
               <i class="bi bi-envelope flex-shrink-0"></i>
               <div>
                 <h4>Email:</h4>
-                <p>info@example.com</p>
+                <p>inquiries@nsbm.ac.lk</p>
               </div>
             </div><!-- End Info Item -->
 
@@ -140,14 +222,14 @@
               <i class="bi bi-phone flex-shrink-0"></i>
               <div>
                 <h4>Call:</h4>
-                <p>+1 5589 55488 55</p>
+                <p>+94 0115 - 445 - 000</p>
               </div>
             </div><!-- End Info Item -->
 
           </div>
 
           <div class="col-lg-8">
-            <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+            <form id = "contactForm" action="forms/contact.php" method="post" role="form" class="php-email-form" novalidate>
               <div class="row">
                 <div class="col-md-6 form-group">
                   <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
@@ -160,13 +242,15 @@
                 <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required>
               </div>
               <div class="form-group mt-3">
-                <textarea class="form-control" name="message" rows="5" placeholder="Message" required></textarea>
+                <textarea class="form-control" name="message" rows="5" placeholder="Type Your Message Here" required></textarea>
               </div>
+
               <div class="my-3">
                 <div class="loading">Loading</div>
                 <div class="error-message"></div>
                 <div class="sent-message">Your message has been sent. Thank you!</div>
               </div>
+              
               <div class="text-center"><button type="submit">Send Message</button></div>
             </form>
           </div><!-- End Contact Form -->
@@ -187,12 +271,12 @@
           <a href="index.html" class="logo d-flex align-items-center">
             <span>Logis</span>
           </a>
-          <p>Cras fermentum odio eu feugiat lide par naso tierra. Justo eget nada terra videa magna derita valies darta donna mare fermentum iaculis eu non diam phasellus.</p>
+          <p>A company with a robust vision centered around providing global assistance to individuals facing vehicle breakdowns. Specializing in connecting users with skilled mechanics, Logis leverages cutting-edge technology to ensure prompt and reliable automotive support, ultimately aiming to redefine the way people access assistance during challenging roadside situations.</p>
           <div class="social-links d-flex mt-4">
-            <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
-            <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-            <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-            <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+            <a href="https://twitter.com/NSBM_SriLanka" class="twitter"><i class="bi bi-twitter"></i></a>
+            <a href="https://www.facebook.com/nsbm.lk/" class="facebook"><i class="bi bi-facebook"></i></a>
+            <a href="https://www.instagram.com/nsbmgreenuniversity/?hl=en" class="instagram"><i class="bi bi-instagram"></i></a>
+            <a href="https://www.linkedin.com/school/nsbmgreenuniversity/" class="linkedin"><i class="bi bi-linkedin"></i></a>
           </div>
         </div>
 
@@ -221,11 +305,11 @@
         <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
           <h4>Contact Us</h4>
           <p>
-            A108 Adam Street <br>
-            New York, NY 535022<br>
-            United States <br><br>
-            <strong>Phone:</strong> +1 5589 55488 55<br>
-            <strong>Email:</strong> info@example.com<br>
+            Pitipana Thalagala Road,<br>
+            Homagama, Sri Lanka<br>
+            <br><br>
+            <strong>Phone:</strong> +94 0115 - 445 - 000<br>
+            <strong>Email:</strong> inquiries@nsbm.ac.lk<br>
           </p>
 
         </div>
@@ -235,14 +319,14 @@
 
     <div class="container mt-4">
       <div class="copyright">
-        &copy; Copyright <strong><span>Logis</span></strong>. All Rights Reserved
+        &copy; Copyright 2023 <strong><span>Logis</span></strong>. All Rights Reserved
       </div>
       <div class="credits">
         <!-- All the links in the footer should remain intact. -->
         <!-- You can delete the links only if you purchased the pro version. -->
         <!-- Licensing information: https://bootstrapmade.com/license/ -->
         <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/logis-bootstrap-logistics-website-template/ -->
-        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+        Designed by <a href="https://bootstrapmade.com/">Team Logis</a>
       </div>
     </div>
 
@@ -260,7 +344,7 @@
   <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
   <script src="assets/vendor/aos/aos.js"></script>
   <script src="assets/vendor/php-email-form/validate.js"></script>
-
+  
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
 
