@@ -18,8 +18,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData.light(),
       initialRoute: '/',
       routes: {
-        '/': (context) => Login(),
-        '/register': (context) => Register(),
+        '/login': (context) => Login(),
+        '/': (context) => Register(),
         '/map': (context) => MapScreen(),
       },
     );
