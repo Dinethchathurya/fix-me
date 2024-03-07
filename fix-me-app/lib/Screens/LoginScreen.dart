@@ -124,8 +124,7 @@ class _LoginState extends State<Login> {
                       onPressed: () {
                         // The 'onPressed' method is used to add the functionality to the button.
                         if (_formKey.currentState!.validate()) {
-                          String email = emailController.text;
-                          String password = passwordController.text;
+                          // When the 'Log In' button is clicked the appropriate validation messages are displayed.
                         }
                       },
                       child: Text(
