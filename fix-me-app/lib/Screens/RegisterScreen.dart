@@ -138,12 +138,13 @@ class _RegisterState extends State<Register> {
                           if (value == null || value.isEmpty) {
                             return "Contact number is missing";
                           }
-                          if (value.length < 10) {
+                          if (value.length > 10) {
                             return "Contact number should be ten digits";
                           }
-                          if (value == Characters.empty) {
+                          if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
                             return "Contact number should be numeric";
                           }
+                          return null;
                         }),
                     SizedBox(
                       height: 50,
