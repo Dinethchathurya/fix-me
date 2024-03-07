@@ -1,4 +1,5 @@
 import 'package:fix_me_app/Screens/LoginScreen.dart';
+import 'package:fix_me_app/Screens/MapScreen.dart';
 import 'package:flutter/material.dart';
 
 class Register extends StatefulWidget {
@@ -156,7 +157,12 @@ class _RegisterState extends State<Register> {
                         child: ElevatedButton(
                           onPressed: () {
                             // Add the functionality to the 'Sign Up' button.
-                            if (_formKey.currentState!.validate()) {}
+                            if (_formKey.currentState!.validate()) {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => MapScreen()));
+                            }
                           },
                           child: Text(
                             "Sign Up",
