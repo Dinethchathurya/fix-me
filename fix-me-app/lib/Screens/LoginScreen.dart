@@ -75,6 +75,32 @@ class _LoginState extends State<Login> {
             SizedBox(
               height: 50,
             ),
+            Center(
+              child: SizedBox(
+                width: 200,
+                height: 50,
+                child: ElevatedButton(
+                  onPressed: () {
+                    // The 'onPressed' method is used to add the functionality to the button.
+                  },
+                  child: Text(
+                    "Log In",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 20,
+                    ),
+                  ),
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                      Color(0xFF39ACE7),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 30,
+            ),
           ],
         ),
       ),
