@@ -9,6 +9,7 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
+  bool _isObscuredText = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,6 +72,16 @@ class _RegisterState extends State<Register> {
                       labelText: "Enter your password",
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20.0),
+                      ),
+                      suffixIcon: IconButton(
+                        icon: Icon(_isObscuredText
+                            ? Icons.visibility_off
+                            : Icons.visibility),
+                        onPressed: () {
+                          setState(() {
+                            _isObscuredText = !_isObscuredText;
+                          });
+                        },
                       ),
                     ),
                   ),
