@@ -1,3 +1,4 @@
+import 'package:fix_me_app/Screens/RegisterScreen.dart';
 import 'package:flutter/material.dart';
 
 class Login extends StatefulWidget {
@@ -116,7 +117,7 @@ class _LoginState extends State<Login> {
                 GestureDetector(
                   onTap: () {
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => SignUp()));
+                        MaterialPageRoute(builder: (context) => Register()));
                   },
                   child: Text(
                     "Sign Up",
