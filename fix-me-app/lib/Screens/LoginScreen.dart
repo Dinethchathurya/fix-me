@@ -1,3 +1,4 @@
+import 'package:fix_me_app/Screens/MapScreen.dart';
 import 'package:fix_me_app/Screens/RegisterScreen.dart';
 import 'package:flutter/material.dart';
 
@@ -125,6 +126,10 @@ class _LoginState extends State<Login> {
                         // The 'onPressed' method is used to add the functionality to the button.
                         if (_formKey.currentState!.validate()) {
                           // When the 'Log In' button is clicked the appropriate validation messages are displayed.
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => MapScreen()));
                         }
                       },
                       child: Text(
