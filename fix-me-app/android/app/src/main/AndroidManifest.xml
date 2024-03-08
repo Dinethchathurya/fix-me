@@ -19,6 +19,14 @@
               android:name="io.flutter.embedding.android.NormalTheme"
               android:resource="@style/NormalTheme"
               />
+
+<!--            <meta-data-->
+<!--                android:name="com.google.android.geo.AIzaSyDNwmSnZ9YxQmGDuAdFnDhp2RiF_OYAPH4"-->
+<!--                android:value="AIzaSyDNwmSnZ9YxQmGDuAdFnDhp2RiF_OYAPH4"/>-->
+            <!--            android:name="flutterEmbedding"-->
+            <!--            android:value="2"-->
+            />
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -27,7 +35,13 @@
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
         <meta-data
+
             android:name="flutterEmbedding"
             android:value="2" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDNwmSnZ9YxQmGDuAdFnDhp2RiF_OYAPH4"/>
+
+
     </application>
 </manifest>

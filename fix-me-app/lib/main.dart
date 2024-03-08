@@ -5,6 +5,7 @@ import 'Screens/LoginScreen.dart';
 import 'Screens/RegisterScreen.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData.light(),
-      initialRoute: '/',
+      initialRoute: '/map',
       routes: {
         '/': (context) => Login(),
         '/register': (context) => Register(),
