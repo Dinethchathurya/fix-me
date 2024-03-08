@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fix_me_app/Screens/MapScreen.dart';
 import 'package:fix_me_app/Screens/RegisterScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:fix_me_app/Screens/AuthPage.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -32,6 +33,10 @@ class _LoginState extends State<Login> {
         password: passwordController.text,
       );
       Navigator.pop(context);
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => MapScreen()),
+      );
     } on FirebaseAuthException catch (e) {
       Navigator.pop(context);
 
@@ -176,10 +181,7 @@ class _LoginState extends State<Login> {
                         // The 'onPressed' method is used to add the functionality to the button.
                         if (_formKey.currentState!.validate()) {
                           // When the 'Log In' button is clicked the appropriate validation messages are displayed.
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => MapScreen()));
+                          signUserIn();
                         }
                       },
                       child: Text(
