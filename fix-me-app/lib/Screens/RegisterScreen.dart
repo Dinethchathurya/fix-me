@@ -157,12 +157,7 @@ class _RegisterState extends State<Register> {
                         child: ElevatedButton(
                           onPressed: () {
                             // Add the functionality to the 'Sign Up' button.
-                            if (_formKey.currentState!.validate()) {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => MapScreen()));
-                            }
+                            if (_formKey.currentState!.validate()) {}
                           },
                           child: Text(
                             "Sign Up",
