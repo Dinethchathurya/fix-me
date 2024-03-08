@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fix_me_app/Screens/MapScreen.dart';
 import 'package:fix_me_app/Screens/RegisterScreen.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,55 @@ class _LoginState extends State<Login> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   bool _isObscuredText = false;
+
+  void signUserIn() async {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      },
+    );
+
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: emailController.text,
+        password: passwordController.text,
+      );
+      Navigator.pop(context);
+    } on FirebaseAuthException catch (e) {
+      Navigator.pop(context);
+
+      if (e.code == 'user-not-found') {
+        wrongEmailMessage();
+      } else if (e.code == 'wrong-password') {
+        wrongEmailMessage();
+      }
+    }
+  }
+
+  void wrongEmailMessage() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return const AlertDialog(
+          title: Text('Incorrect email'),
+        );
+      },
+    );
+  }
+
+  void wrongPasswordMessage() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return const AlertDialog(
+          title: Text('Incorrect password'),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
