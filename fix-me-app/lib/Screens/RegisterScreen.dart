@@ -18,7 +18,7 @@ class _RegisterState extends State<Register> {
   final contactnumberController = TextEditingController();
   bool _isObscuredText = false;
 
-  void signUserUp() async {
+  void signUserUp(BuildContext context) async {
     showDialog(
       context: context,
       builder: (context) {
@@ -56,7 +56,16 @@ class _RegisterState extends State<Register> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text(message),
+          title: Text("Email already in use"),
+          content: Text(message),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text("OK"),
+            ),
+          ],
         );
       },
     );
@@ -67,7 +76,16 @@ class _RegisterState extends State<Register> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text(message),
+          title: Text("Invalid contact number"),
+          content: Text(message),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text("OK"),
+            ),
+          ],
         );
       },
     );
@@ -215,7 +233,7 @@ class _RegisterState extends State<Register> {
                           onPressed: () {
                             // Add the functionality to the 'Sign Up' button.
                             if (_formKey.currentState!.validate()) {
-                              signUserUp();
+                              signUserUp(context);
                             }
                           },
                           child: Text(
