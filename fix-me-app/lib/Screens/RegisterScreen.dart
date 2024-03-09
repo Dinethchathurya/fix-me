@@ -33,11 +33,11 @@ class _RegisterState extends State<Register> {
         email: emailController.text,
         password: passwordController.text,
       );
-      Navigator.pop(context);
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => MapScreen()),
       );
+      Navigator.pop(context);
     } on FirebaseAuthException catch (e) {
       Navigator.pop(context);
 
