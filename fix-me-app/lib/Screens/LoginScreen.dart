@@ -39,32 +39,50 @@ class _LoginState extends State<Login> {
       );
     } on FirebaseAuthException catch (e) {
       Navigator.pop(context);
-
+      print("FirebaseAuthException: ${e.code}");
       if (e.code == 'user-not-found') {
-        wrongEmailMessage();
+        wrongEmailMessage("Incorrect email");
       } else if (e.code == 'wrong-password') {
-        wrongEmailMessage();
+        wrongPasswordMessage("Incorrect password");
       }
     }
   }
 
-  void wrongEmailMessage() {
+  void wrongEmailMessage(String message) {
     showDialog(
       context: context,
       builder: (context) {
-        return const AlertDialog(
-          title: Text('Incorrect email'),
+        return AlertDialog(
+          title: Text("Incorrect Email"),
+          content: Text(message),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text("OK"),
+            ),
+          ],
         );
       },
     );
   }
 
-  void wrongPasswordMessage() {
+  void wrongPasswordMessage(String message) {
     showDialog(
       context: context,
       builder: (context) {
-        return const AlertDialog(
-          title: Text('Incorrect password'),
+        return AlertDialog(
+          title: Text("Incorrect Password"),
+          content: Text(message),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text("OK"),
+            ),
+          ],
         );
       },
     );
