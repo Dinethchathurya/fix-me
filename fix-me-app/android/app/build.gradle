@@ -60,10 +60,16 @@ android {
             signingConfig signingConfigs.debug
         }
     }
+
+    compileSdkVersion 34
 }
 
 flutter {
     source '../..'
 }
 
-dependencies {}
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    ext.kotlin_version = '1.9.23'  // Use a version that is available
+
+}

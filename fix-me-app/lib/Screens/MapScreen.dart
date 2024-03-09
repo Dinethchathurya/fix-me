@@ -1,64 +1,80 @@
-import 'dart:async';
-
+import 'package:fix_me_app/Services/GetLocation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-class MapScreen extends StatelessWidget {
-  const MapScreen({super.key});
+class MapScreen extends StatefulWidget {
+  @override
+  State<MapScreen> createState() => _MapScreenState();
+}
+
+class _MapScreenState extends State<MapScreen> {
+  @override
+  void initState() {
+    super.initState();
+    // GetLocationClass getLocationClass = GetLocationClass();
+    // getLocationClass.GetLocation();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        child: MapSample(),
+      body: Center(
+        child: Google(),
         //TODO crete map page here
       ),
     );
   }
 }
 
-class MapSample extends StatefulWidget {
-  const MapSample({super.key});
-
+class Google extends StatefulWidget {
   @override
-  State<MapSample> createState() => MapSampleState();
+  State<Google> createState() => _GooleState();
 }
 
-class MapSampleState extends State<MapSample> {
-  final Completer<GoogleMapController> _controller =
-      Completer<GoogleMapController>();
+class _GooleState extends State<Google> {
+  @override
+  void initState() {
+    super.initState();
+    getlatlng();
+  }
 
-  static const CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(37.42796133580664, -122.085749655962),
-    zoom: 14.4746,
-  );
+  double? lat;
+  double? lon;
+  var isLoading = true;
 
-  static const CameraPosition _kLake = CameraPosition(
-      bearing: 192.8334901395799,
-      target: LatLng(37.43296265331129, -122.08832357078792),
-      tilt: 59.440717697143555,
-      zoom: 19.151926040649414);
+  void getlatlng() async {
+    GetLocationClass getLocationClass = GetLocationClass();
+    await getLocationClass.GetLocation();
+    setState(() {
+      lat = getLocationClass.lat;
+      lon = getLocationClass.log;
+      isLoading = false; // Set isLoading to false once data is loaded
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: GoogleMap(
-        mapType: MapType.hybrid,
-        initialCameraPosition: _kGooglePlex,
-        onMapCreated: (GoogleMapController controller) {
-          _controller.complete(controller);
+    if (isLoading) {
+      return CircularProgressIndicator(); // or any other loading indicator
+    }
+
+    return Center(
+      child: GoogleMap(
+        initialCameraPosition: CameraPosition(
+          target: LatLng(lat!, lon!),
+          zoom: 16.5,
+        ),
+        markers: {
+          Marker(
+            markerId: MarkerId('Sydney'),
+            position: LatLng(lat!, lon!),
+          ),
+          Marker(
+            markerId: MarkerId('Sydne'),
+            position: LatLng(6.839118, 80.021366),
+          ),
         },
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: _goToTheLake,
-        label: const Text('To the lake!'),
-        icon: const Icon(Icons.directions_boat),
-      ),
     );
-  }
-
-  Future<void> _goToTheLake() async {
-    final GoogleMapController controller = await _controller.future;
-    await controller.animateCamera(CameraUpdate.newCameraPosition(_kLake));
   }
 }
