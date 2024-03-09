@@ -164,6 +164,7 @@ class _RegisterState extends State<Register> {
                     ),
                     TextFormField(
                         controller: passwordController,
+                        obscureText: _isObscuredText,
                         decoration: InputDecoration(
                           labelText: "Enter your password",
                           border: OutlineInputBorder(
