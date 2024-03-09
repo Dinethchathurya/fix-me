@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fix_me_app/Screens/LoginScreen.dart';
 import 'package:fix_me_app/Screens/MapScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:fix_me_app/Screens/AuthPage.dart';
 
 class Register extends StatefulWidget {
   const Register({super.key});
@@ -11,11 +13,66 @@ class Register extends StatefulWidget {
 
 class _RegisterState extends State<Register> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
-  final _contactnumberController = TextEditingController();
-
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final contactnumberController = TextEditingController();
   bool _isObscuredText = false;
+
+  void signUserUp() async {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      },
+    );
+
+    try {
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: emailController.text,
+        password: passwordController.text,
+      );
+      Navigator.pop(context);
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => MapScreen()),
+      );
+    } on FirebaseAuthException catch (e) {
+      Navigator.pop(context);
+
+      if (e.code == 'email-already-in-use') {
+        wrongEmailMessage("Email already in use");
+      } else if (e.code == 'invalid-email') {
+        wrongEmailMessage("Invalid email");
+      } else if (e.code == 'wrong-contactnumber') {
+        wrongContactNumber("Invalid contact number");
+      }
+    }
+  }
+
+  void wrongEmailMessage(String message) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(message),
+        );
+      },
+    );
+  }
+
+  void wrongContactNumber(String message) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(message),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,7 +112,7 @@ class _RegisterState extends State<Register> {
                       height: 10,
                     ),
                     TextFormField(
-                        controller: _emailController,
+                        controller: emailController,
                         decoration: InputDecoration(
                           labelText: "Enter your email",
                           border: OutlineInputBorder(
@@ -88,7 +145,7 @@ class _RegisterState extends State<Register> {
                       height: 10,
                     ),
                     TextFormField(
-                        controller: _passwordController,
+                        controller: passwordController,
                         decoration: InputDecoration(
                           labelText: "Enter your password",
                           border: OutlineInputBorder(
@@ -128,7 +185,7 @@ class _RegisterState extends State<Register> {
                       height: 10,
                     ),
                     TextFormField(
-                        controller: _contactnumberController,
+                        controller: contactnumberController,
                         decoration: InputDecoration(
                           labelText: "Enter your contact number",
                           border: OutlineInputBorder(
@@ -157,7 +214,9 @@ class _RegisterState extends State<Register> {
                         child: ElevatedButton(
                           onPressed: () {
                             // Add the functionality to the 'Sign Up' button.
-                            if (_formKey.currentState!.validate()) {}
+                            if (_formKey.currentState!.validate()) {
+                              signUserUp();
+                            }
                           },
                           child: Text(
                             "Sign Up",
