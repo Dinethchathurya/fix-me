@@ -20,12 +20,6 @@
               android:resource="@style/NormalTheme"
               />
 
-<!--            <meta-data-->
-<!--                android:name="com.google.android.geo.AIzaSyDNwmSnZ9YxQmGDuAdFnDhp2RiF_OYAPH4"-->
-<!--                android:value="AIzaSyDNwmSnZ9YxQmGDuAdFnDhp2RiF_OYAPH4"/>-->
-            <!--            android:name="flutterEmbedding"-->
-            <!--            android:value="2"-->
-            />
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

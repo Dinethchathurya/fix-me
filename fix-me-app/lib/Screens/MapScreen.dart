@@ -12,7 +12,8 @@ class MapScreen extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: FutureBuilder(
-          future: Provider.of<TaskData>(context, listen: false).getdata(),
+          future: Provider.of<TaskData>(context, listen: false)
+              .getUsersLocationData(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
               double nearestMechanicLocationLatitude =
@@ -24,9 +25,12 @@ class MapScreen extends StatelessWidget {
               double currentLogUserLongitude =
                   Provider.of<TaskData>(context, listen: false)
                       .currentLogUserLongitude;
-              double currentLogUserlatitude =
+              double currentLogUserLatitude =
                   Provider.of<TaskData>(context, listen: false)
                       .currentLogUserLatitude;
+              Map<PolylineId, Polyline> polylines =
+                  Provider.of<TaskData>(context, listen: false)
+                      .polylinesInTaskData;
 
               return GoogleMap(
                 initialCameraPosition: CameraPosition(
@@ -38,14 +42,15 @@ class MapScreen extends StatelessWidget {
                   Marker(
                     markerId: MarkerId('Log User Location'),
                     position:
-                        LatLng(currentLogUserlatitude, currentLogUserLongitude),
+                        LatLng(currentLogUserLatitude, currentLogUserLongitude),
                   ),
                   Marker(
                     markerId: MarkerId('mechanic Location'),
-                    position:
-                        LatLng(currentLogUserlatitude, currentLogUserLongitude),
+                    position: LatLng(nearestMechanicLocationLatitude,
+                        nearestMechanicLocationLongitude),
                   )
                 },
+                polylines: Set<Polyline>.of(polylines.values),
               );
             } else {
               return CircularProgressIndicator();
