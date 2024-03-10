@@ -49,6 +49,8 @@ android {
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+
+        minSdkVersion 20
     }
 
     buildTypes {
@@ -58,10 +60,15 @@ android {
             signingConfig signingConfigs.debug
         }
     }
+
+    compileSdkVersion 34
 }
 
 flutter {
     source '../..'
 }
 
-dependencies {}
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+}
