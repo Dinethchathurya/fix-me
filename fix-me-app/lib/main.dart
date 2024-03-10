@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -5,7 +6,6 @@ import 'Models/ModelsData.dart';
 import 'Screens/LoginScreen.dart';
 import 'Screens/MapScreen.dart';
 import 'Screens/RegisterScreen.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
       builder: (BuildContext context, Widget) {
         return MaterialApp(
           theme: ThemeData.light(),
-          initialRoute: '/map',
+          initialRoute: '/',
           routes: {
             '/': (context) => Login(),
             '/register': (context) => Register(),
