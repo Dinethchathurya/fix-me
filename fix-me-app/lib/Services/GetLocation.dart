@@ -1,10 +1,13 @@
+import 'package:flutter/foundation.dart';
 import 'package:geolocator/geolocator.dart';
 
-class GetLocationClass {
-  var log;
-  var lat;
+class GetLocationClass extends ChangeNotifier {
+  var currentLogUserLongitude;
+  var currentLogUserLatitude;
+  late double nearestMechanicLocationLongitude;
+  late double nearestMechanicLocationLatitude;
 
-  GetLocation() async {
+  getCurrentUserLocation() async {
     bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
       // Location services are not enabled, show a dialog to enable them
@@ -25,7 +28,12 @@ class GetLocationClass {
     Position position = await Geolocator.getCurrentPosition(
       desiredAccuracy: LocationAccuracy.medium,
     );
-    log = position.longitude;
-    lat = position.latitude;
+    currentLogUserLongitude = position.longitude;
+    currentLogUserLatitude = position.latitude;
+  }
+
+  getMechanicLocation() {
+    nearestMechanicLocationLongitude = 80.023566;
+    nearestMechanicLocationLatitude = 6.838218;
   }
 }

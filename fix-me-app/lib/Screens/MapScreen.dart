@@ -1,79 +1,57 @@
-import 'package:fix_me_app/Services/GetLocation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:provider/provider.dart';
 
-class MapScreen extends StatefulWidget {
-  @override
-  State<MapScreen> createState() => _MapScreenState();
-}
+import '../Models/ModelsData.dart';
 
-class _MapScreenState extends State<MapScreen> {
-  @override
-  void initState() {
-    super.initState();
-    // GetLocationClass getLocationClass = GetLocationClass();
-    // getLocationClass.GetLocation();
-  }
+class MapScreen extends StatelessWidget {
+  const MapScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Google(),
-        //TODO crete map page here
-      ),
-    );
-  }
-}
+        child: FutureBuilder(
+          future: Provider.of<TaskData>(context, listen: false).getdata(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              double nearestMechanicLocationLatitude =
+                  Provider.of<TaskData>(context, listen: false)
+                      .nearestMechanicLocationLatitude;
+              double nearestMechanicLocationLongitude =
+                  Provider.of<TaskData>(context, listen: false)
+                      .nearestMechanicLocationLongitude;
+              double currentLogUserLongitude =
+                  Provider.of<TaskData>(context, listen: false)
+                      .currentLogUserLongitude;
+              double currentLogUserlatitude =
+                  Provider.of<TaskData>(context, listen: false)
+                      .currentLogUserLatitude;
 
-class Google extends StatefulWidget {
-  @override
-  State<Google> createState() => _GooleState();
-}
-
-class _GooleState extends State<Google> {
-  @override
-  void initState() {
-    super.initState();
-    getlatlng();
-  }
-
-  double? lat;
-  double? lon;
-  var isLoading = true;
-
-  void getlatlng() async {
-    GetLocationClass getLocationClass = GetLocationClass();
-    await getLocationClass.GetLocation();
-    setState(() {
-      lat = getLocationClass.lat;
-      lon = getLocationClass.log;
-      isLoading = false; // Set isLoading to false once data is loaded
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    if (isLoading) {
-      return CircularProgressIndicator(); // or any other loading indicator
-    }
-
-    return Center(
-      child: GoogleMap(
-        initialCameraPosition: CameraPosition(
-          target: LatLng(lat!, lon!),
-          zoom: 16.5,
+              return GoogleMap(
+                initialCameraPosition: CameraPosition(
+                  target: LatLng(nearestMechanicLocationLatitude,
+                      nearestMechanicLocationLongitude),
+                  zoom: 16.5,
+                ),
+                markers: {
+                  Marker(
+                    markerId: MarkerId('Log User Location'),
+                    position:
+                        LatLng(currentLogUserlatitude, currentLogUserLongitude),
+                  ),
+                  Marker(
+                    markerId: MarkerId('mechanic Location'),
+                    position:
+                        LatLng(currentLogUserlatitude, currentLogUserLongitude),
+                  )
+                },
+              );
+            } else {
+              return CircularProgressIndicator();
+            }
+          },
         ),
-        markers: {
-          Marker(
-            markerId: MarkerId('Sydney'),
-            position: LatLng(lat!, lon!),
-          ),
-          Marker(
-            markerId: MarkerId('Sydne'),
-            position: LatLng(6.839118, 80.021366),
-          ),
-        },
       ),
     );
   }
