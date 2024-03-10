@@ -22,6 +22,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return ChangeNotifierProvider(
       create: (BuildContext context) {
         return TaskData();
@@ -36,6 +37,7 @@ class MyApp extends StatelessWidget {
             '/map': (context) => MapScreen(),
           },
         );
+
       },
     );
   }
