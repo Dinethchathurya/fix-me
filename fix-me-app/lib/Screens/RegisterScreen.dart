@@ -8,10 +8,6 @@ class Register extends StatelessWidget {
     return Scaffold(
       body: Container(
         child: Text('REGISTER page'),
-        //TODO crete register page here
-
-        //TODO user can register using email,password and 4n number
-        // TODO when user register successfully he needs to be redirect map page
       ),
     );
   }
