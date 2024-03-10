@@ -6,7 +6,6 @@ import 'Models/ModelsData.dart';
 import 'Screens/LoginScreen.dart';
 import 'Screens/MapScreen.dart';
 import 'Screens/RegisterScreen.dart';
-import 'Screens/testfirebase.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -23,6 +22,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return ChangeNotifierProvider(
       create: (BuildContext context) {
         return TaskData();
@@ -30,14 +30,14 @@ class MyApp extends StatelessWidget {
       builder: (BuildContext context, Widget) {
         return MaterialApp(
           theme: ThemeData.light(),
-          initialRoute: '/testfirebase',
+          initialRoute: '/',
           routes: {
             '/': (context) => Login(),
             '/register': (context) => Register(),
             '/map': (context) => MapScreen(),
-            '/testfirebase': (context) => TestFirebase(),
           },
         );
+
       },
     );
   }

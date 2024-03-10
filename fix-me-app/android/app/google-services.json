@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "583026412903",
-    "project_id": "fix-me-app-d8065",
-    "storage_bucket": "fix-me-app-d8065.appspot.com"
+    "project_number": "821226366761",
+    "project_id": "fix-me-694d8",
+    "storage_bucket": "fix-me-694d8.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:583026412903:android:b8c907cb5a3439339df3c2",
+        "mobilesdk_app_id": "1:821226366761:android:f7a6e600e6a714b9207938",
         "android_client_info": {
           "package_name": "com.example.fix_me_app"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCUvGfEMeTd60HKY-7ldSJEdU6cD36qbV0"
+          "current_key": "AIzaSyCMK23EUeAA0OviFiFgF4LE9mWiwwUOVYI"
         }
       ],
       "services": {

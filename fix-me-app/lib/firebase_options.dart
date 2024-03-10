@@ -17,7 +17,10 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      return web;
+      throw UnsupportedError(
+        'DefaultFirebaseOptions have not been configured for web - '
+        'you can reconfigure this by running the FlutterFire CLI again.',
+      );
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -25,7 +28,10 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        return macos;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -43,38 +49,20 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyB0NyqTqZQJ6RQb6NFPfFEvF8I5xRokadA',
-    appId: '1:583026412903:web:fa6421964c0d465c9df3c2',
-    messagingSenderId: '583026412903',
-    projectId: 'fix-me-app-d8065',
-    authDomain: 'fix-me-app-d8065.firebaseapp.com',
-    storageBucket: 'fix-me-app-d8065.appspot.com',
-  );
-
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCUvGfEMeTd60HKY-7ldSJEdU6cD36qbV0',
-    appId: '1:583026412903:android:b8c907cb5a3439339df3c2',
-    messagingSenderId: '583026412903',
-    projectId: 'fix-me-app-d8065',
-    storageBucket: 'fix-me-app-d8065.appspot.com',
+    apiKey: 'AIzaSyCMK23EUeAA0OviFiFgF4LE9mWiwwUOVYI',
+    appId: '1:821226366761:android:f7a6e600e6a714b9207938',
+    messagingSenderId: '821226366761',
+    projectId: 'fix-me-694d8',
+    storageBucket: 'fix-me-694d8.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDYmN94Y5mhh7JU0hgVlcqoHmlwfkVyo_s',
-    appId: '1:583026412903:ios:f8cad36ae638c2f19df3c2',
-    messagingSenderId: '583026412903',
-    projectId: 'fix-me-app-d8065',
-    storageBucket: 'fix-me-app-d8065.appspot.com',
+    apiKey: 'AIzaSyCSjJ30Ie3YRg1gErPPVQRcLIWkB17-y5w',
+    appId: '1:821226366761:ios:ded6deefdf9defeb207938',
+    messagingSenderId: '821226366761',
+    projectId: 'fix-me-694d8',
+    storageBucket: 'fix-me-694d8.appspot.com',
     iosBundleId: 'com.example.fixMeApp',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyDYmN94Y5mhh7JU0hgVlcqoHmlwfkVyo_s',
-    appId: '1:583026412903:ios:e259ebe29631fda19df3c2',
-    messagingSenderId: '583026412903',
-    projectId: 'fix-me-app-d8065',
-    storageBucket: 'fix-me-app-d8065.appspot.com',
-    iosBundleId: 'com.example.fixMeApp.RunnerTests',
   );
 }

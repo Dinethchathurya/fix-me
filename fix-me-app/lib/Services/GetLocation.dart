@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fix_me_app/Consts%20/Consts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
@@ -39,17 +38,9 @@ class GetLocationClass extends ChangeNotifier {
     currentLogUserLatitude = position.latitude;
   }
 
-  getMechanicLocation() async {
+  getMechanicLocation() {
     nearestMechanicLocationLongitude = 80.024566;
     nearestMechanicLocationLatitude = 6.837218;
-
-    final db = FirebaseFirestore.instance;
-
-    // await db.collection("users").get().then((event) {
-    //   for (var doc in event.docs) {
-    //     print("${doc.id} => ${doc.data()}");
-    //   }
-    // });
   }
 
   Future<List<LatLng>> getPolylinePoints() async {
@@ -79,6 +70,7 @@ class GetLocationClass extends ChangeNotifier {
         color: Colors.black,
         points: polyLineCordinates,
         width: 8);
+
     polylines[Id] = polyline;
   }
 }
