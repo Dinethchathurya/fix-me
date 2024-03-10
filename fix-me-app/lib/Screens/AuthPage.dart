@@ -7,6 +7,7 @@ import 'package:fix_me_app/Screens/LoginScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+
 class AuthPage extends StatelessWidget {
   const AuthPage({super.key});
 
@@ -20,7 +21,7 @@ class AuthPage extends StatelessWidget {
                 return MapScreen();
               } else {
 
-                return Register();
+                return Login();
 
               }
             }));
