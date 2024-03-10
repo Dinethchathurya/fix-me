@@ -1,7 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:fix_me_app/Screens/MapScreen.dart';
-import 'package:flutter/material.dart';
+import 'package:fix_me_app/Screens/RegisterScreen.dart';
 import 'package:fix_me_app/Screens/LoginScreen.dart';
+
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+
 
 class AuthPage extends StatelessWidget {
   const AuthPage({super.key});
@@ -15,7 +20,9 @@ class AuthPage extends StatelessWidget {
               if (snapshot.hasData) {
                 return MapScreen();
               } else {
+
                 return Login();
+
               }
             }));
   }
