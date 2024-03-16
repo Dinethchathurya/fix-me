@@ -8,7 +8,6 @@ class Register extends StatefulWidget {
   const Register({super.key});
 
   @override
-
   State<Register> createState() => _RegisterState();
 }
 
@@ -17,7 +16,14 @@ class _RegisterState extends State<Register> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final contactnumberController = TextEditingController();
+  final roleController = TextEditingController();
   bool _isObscuredText = false;
+
+  // Create a variable called 'selectedRole' that may or may not be null.
+  String? selectedRole;
+
+  // Create a list that consists of the roles.
+  final List<String> roles = ['Select a role', 'User', 'Mechanic'];
 
   void signUserUp(BuildContext context) async {
     showDialog(
@@ -69,7 +75,6 @@ class _RegisterState extends State<Register> {
           ],
         );
       },
-
     );
   }
 
@@ -196,7 +201,7 @@ class _RegisterState extends State<Register> {
                       height: 20,
                     ),
                     Text(
-                      "Contact Number",
+                      "Role",
                       style: TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.normal,
@@ -205,26 +210,23 @@ class _RegisterState extends State<Register> {
                     SizedBox(
                       height: 10,
                     ),
-                    TextFormField(
-                        controller: contactnumberController,
-                        decoration: InputDecoration(
-                          labelText: "Enter your contact number",
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(20.0),
-                          ),
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return "Contact number is missing";
-                          }
-                          if (value.length > 10) {
-                            return "Contact number should be ten digits";
-                          }
-                          if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
-                            return "Contact number should be numeric";
-                          }
-                          return null;
-                        }),
+                    DropdownButtonFormField<String>(
+                      value: selectedRole,
+                      hint: Text("Select a role"),
+                      items: roles.map((String role) {
+                        return DropdownMenuItem<String>(
+                            value: role, child: Text(role));
+                      }).toList(),
+                      onChanged: (String? value) {
+                        setState(() {
+                          selectedRole = value;
+                        });
+                      },
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20.0)),
+                      ),
+                    ),
                     SizedBox(
                       height: 50,
                     ),
