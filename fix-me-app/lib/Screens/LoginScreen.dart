@@ -1,6 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fix_me_app/Screens/MapScreen.dart';
+import 'package:fix_me_app/Screens/MechanicScreen.dart';
 import 'package:fix_me_app/Screens/RegisterScreen.dart';
+import 'package:fix_me_app/Screens/UserScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:fix_me_app/Screens/AuthPage.dart';
 
@@ -17,75 +20,74 @@ class _LoginState extends State<Login> {
   final passwordController = TextEditingController();
   bool _isObscuredText = false;
 
-  void signUserIn() async {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return const Center(
-          child: CircularProgressIndicator(),
-        );
-      },
-    );
-
+  // This method calls the 'signInUser' method when the 'Log In' button is clicked.
+  Future<void> signUserIn() async {
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: emailController.text,
-        password: passwordController.text,
-      );
-      Navigator.pop(context);
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => MapScreen()),
-      );
-    } on FirebaseAuthException catch (e) {
-      Navigator.pop(context);
-      print("FirebaseAuthException: ${e.code}");
-      if (e.code == 'user-not-found') {
-        wrongEmailMessage("Incorrect email");
-      } else if (e.code == 'wrong-password') {
-        wrongPasswordMessage("Incorrect password");
+      // Signs in the user based on  the provided user credentials.
+      UserCredential userCredential = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(
+              email: emailController.text, password: passwordController.text);
+
+      // Retrieves the user's role from Firestore.
+      DocumentSnapshot userSnapshot = await FirebaseFirestore.instance
+          // Retrieves a document from a collection called 'users' and returns a document
+          // snapshot object that represents the data that was fetched from the database.
+          .collection('users')
+          .doc(userCredential.user!.uid)
+          .get();
+
+      // Retrieves the role of the individual.
+      String userRole = userSnapshot['role'];
+
+      // Navigate to appropriate screen based on user role.
+      if (userRole == 'User') {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => UserScreen()),
+        );
+      } else if (userRole == 'Mechanic') {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => MechanicScreen()),
+        );
       }
+    } on FirebaseAuthException catch (e) {
+      // Handle FirebaseAuth exceptions
+      print('FirebaseAuthException: ${e.code}');
+      String errorMessage = '';
+
+      // Determine error message based on exception code
+      switch (e.code) {
+        case 'user-not-found':
+          errorMessage = 'User not found';
+          break;
+        case 'wrong-password':
+          errorMessage = 'Incorrect password';
+          break;
+        default:
+          errorMessage = 'An error occurred';
+          break;
+      }
+
+      // Display error message to user
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Error'),
+            content: Text(errorMessage),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
     }
-  }
-
-  void wrongEmailMessage(String message) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text("Incorrect Email"),
-          content: Text(message),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text("OK"),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  void wrongPasswordMessage(String message) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text("Incorrect Password"),
-          content: Text(message),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text("OK"),
-            ),
-          ],
-        );
-      },
-    );
   }
 
   @override
