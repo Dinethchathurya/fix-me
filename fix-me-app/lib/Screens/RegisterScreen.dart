@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fix_me_app/Screens/LoginScreen.dart';
 import 'package:fix_me_app/Screens/MapScreen.dart';
+import 'package:fix_me_app/Screens/MechanicScreen.dart';
+import 'package:fix_me_app/Screens/UserScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:fix_me_app/Screens/AuthPage.dart';
 
