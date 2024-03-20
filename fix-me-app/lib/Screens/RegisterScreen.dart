@@ -1,6 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fix_me_app/Screens/LoginScreen.dart';
 import 'package:fix_me_app/Screens/MapScreen.dart';
+import 'package:fix_me_app/Screens/MechanicScreen.dart';
+import 'package:fix_me_app/Screens/UserScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:fix_me_app/Screens/AuthPage.dart';
 
@@ -8,7 +11,6 @@ class Register extends StatefulWidget {
   const Register({super.key});
 
   @override
-
   State<Register> createState() => _RegisterState();
 }
 
@@ -17,37 +19,83 @@ class _RegisterState extends State<Register> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final contactnumberController = TextEditingController();
+  final roleController = TextEditingController();
   bool _isObscuredText = false;
 
-  void signUserUp(BuildContext context) async {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return const Center(
-          child: CircularProgressIndicator(),
+  // Create a variable called 'selectedRole' that may or may not be null.
+  String? selectedRole;
+
+  // Create a list that consists of the roles.
+  final List<String> roles = ['Select a role', 'User', 'Mechanic'];
+
+  // The 'signUserUp' method is called when the 'Sign Up' button is pressed.
+  Future<void> signUserUp() async {
+    if (_formKey.currentState!.validate()) {
+      // If the selected role is 'Select a role' , an error message is displayed.
+      if (selectedRole == 'Select a role') {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text("Invalid Role"),
+              content: Text("Please select a role."),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    // Closes the alert dialog upon clicking on the "OK" text button.
+                    Navigator.of(context).pop();
+                  },
+                  child: Text("OK"),
+                ),
+              ],
+            );
+          },
         );
-      },
-    );
+        return;
+      }
 
-    try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: emailController.text,
-        password: passwordController.text,
-      );
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => MapScreen()),
-      );
-      Navigator.pop(context);
-    } on FirebaseAuthException catch (e) {
-      Navigator.pop(context);
+      // Get current timestamp.
+      Timestamp timestamp = Timestamp.now();
 
-      if (e.code == 'email-already-in-use') {
-        wrongEmailMessage("Email already in use");
-      } else if (e.code == 'invalid-email') {
-        wrongEmailMessage("Invalid email");
-      } else if (e.code == 'wrong-contactnumber') {
-        wrongContactNumber("Invalid contact number");
+      try {
+        // Creates a user with email and password.
+        UserCredential userCredential =
+            await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: emailController.text,
+          password: passwordController.text,
+        );
+
+        // Set user data in Firestore by creating a collection named 'users' along with
+        // the relavant documents.
+        // The 'set' method, sets the data in the database.
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(userCredential.user!.uid)
+            .set({
+          'email': emailController.text,
+          'role': selectedRole, // Set selected role from dropdown
+          'registrationTimestamp': timestamp,
+        });
+
+        // Determine which screen to navigate to based on the selected role.
+        if (selectedRole == 'User') {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => UserScreen()),
+          );
+        } else if (selectedRole == 'Mechanic') {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => MechanicScreen()),
+          );
+        }
+      } on FirebaseAuthException catch (e) {
+        // Handle FirebaseAuth exceptions
+        if (e.code == 'email-already-in-use') {
+          wrongEmailMessage("Email already in use");
+        } else if (e.code == 'invalid-email') {
+          wrongEmailMessage("Invalid email");
+        }
       }
     }
   }
@@ -58,27 +106,6 @@ class _RegisterState extends State<Register> {
       builder: (context) {
         return AlertDialog(
           title: Text("Email already in use"),
-          content: Text(message),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text("OK"),
-            ),
-          ],
-        );
-      },
-
-    );
-  }
-
-  void wrongContactNumber(String message) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text("Invalid contact number"),
           content: Text(message),
           actions: [
             TextButton(
@@ -196,7 +223,7 @@ class _RegisterState extends State<Register> {
                       height: 20,
                     ),
                     Text(
-                      "Contact Number",
+                      "Role",
                       style: TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.normal,
@@ -205,26 +232,31 @@ class _RegisterState extends State<Register> {
                     SizedBox(
                       height: 10,
                     ),
-                    TextFormField(
-                        controller: contactnumberController,
-                        decoration: InputDecoration(
-                          labelText: "Enter your contact number",
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(20.0),
-                          ),
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return "Contact number is missing";
-                          }
-                          if (value.length > 10) {
-                            return "Contact number should be ten digits";
-                          }
-                          if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
-                            return "Contact number should be numeric";
-                          }
-                          return null;
-                        }),
+                    DropdownButtonFormField<String>(
+                      value: selectedRole,
+                      hint: Text("Select a role"),
+                      items: roles.map((String role) {
+                        return DropdownMenuItem<String>(
+                            value: role, child: Text(role));
+                      }).toList(),
+                      onChanged: (String? value) {
+                        setState(() {
+                          selectedRole = value;
+                        });
+                      },
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20.0)),
+                      ),
+                      validator: (value) {
+                        if (value == null ||
+                            value.isEmpty ||
+                            value == 'Select a role') {
+                          return "Invalid role";
+                        }
+                        return null;
+                      },
+                    ),
                     SizedBox(
                       height: 50,
                     ),
@@ -233,12 +265,7 @@ class _RegisterState extends State<Register> {
                         width: 200,
                         height: 50,
                         child: ElevatedButton(
-                          onPressed: () {
-                            // Add the functionality to the 'Sign Up' button.
-                            if (_formKey.currentState!.validate()) {
-                              signUserUp(context);
-                            }
-                          },
+                          onPressed: signUserUp,
                           child: Text(
                             "Sign Up",
                             style: TextStyle(
