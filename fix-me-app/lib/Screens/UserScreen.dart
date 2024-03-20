@@ -1,6 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+
+import '../Components/FutureBuilderForGoogleMapSingleLocation.dart';
 
 class UserScreen extends StatefulWidget {
   const UserScreen({super.key});
@@ -14,18 +14,11 @@ class _UserScreenState extends State<UserScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(
-          child: Text(
-            "User",
-            style: TextStyle(
-              fontSize: 20,
-              color: Colors.black,
-            ),
-          ),
-        ),
+        title: Text('User Home Screen'),
+        backgroundColor: Color(0xFF39ACE7),
       ),
       body: Center(
-        child: Text("User page"),
+        child: FutureBuilderForGoogleMapSingleLocation(),
       ),
     );
   }

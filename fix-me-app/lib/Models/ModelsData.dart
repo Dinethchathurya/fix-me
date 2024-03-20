@@ -29,4 +29,13 @@ class TaskData extends ChangeNotifier {
     //
     // polylinesInTaskData = await getLocationClass.polylines;
   }
+
+  getLoggedUsersLocation() async {
+    // this method for current user map screen only
+    GetCurrentLocationClass getLocationClass = GetCurrentLocationClass();
+    await getLocationClass.getCurrentUserLocation();
+
+    currentLogUserLatitude = await getLocationClass.currentLogUserLatitude;
+    currentLogUserLongitude = await getLocationClass.currentLogUserLongitude;
+  }
 }

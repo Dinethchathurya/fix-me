@@ -1,5 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
+import '../Components/FutureBuilderForGoogleMapSingleLocation.dart';
 
 class MechanicScreen extends StatefulWidget {
   const MechanicScreen({super.key});
@@ -13,18 +14,11 @@ class _MechanicScreenState extends State<MechanicScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(
-          child: Text(
-            "Mechanic",
-            style: TextStyle(
-              fontSize: 20,
-              color: Colors.black,
-            ),
-          ),
-        ),
+        backgroundColor: Color(0xFF39ACE7),
+        title: Text('Mechanic Home Screen'),
       ),
       body: Center(
-        child: Text("Mechanic page"),
+        child: FutureBuilderForGoogleMapSingleLocation(),
       ),
     );
   }
