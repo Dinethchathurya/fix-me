@@ -16,7 +16,7 @@ void main() async {
     name: 'fix-me-app-d8065', // Use the correct project ID here
   );
 
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {

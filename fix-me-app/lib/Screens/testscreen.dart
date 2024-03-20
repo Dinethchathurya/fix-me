@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fix_me_app/Services/GetMechanicLocation.dart';
 import 'package:flutter/material.dart';
 
 class TestFirebase extends StatelessWidget {
@@ -8,25 +9,30 @@ class TestFirebase extends StatelessWidget {
   Widget build(BuildContext context) {
     final db = FirebaseFirestore.instance;
     return Scaffold(
-      body: Center(
-        child: TextButton(
-          onPressed: () async {
-            // List<Map<String, dynamic>> tempList = [];
-            try {
-              await db.collection("location").get().then(
-                (querySnapshot) {
-                  print("Successfully completed");
-                  for (var docSnapshot in querySnapshot.docs) {
-                    print('helo ${docSnapshot.id} => ${docSnapshot.data()}');
-                  }
+      body: SafeArea(
+        child: Column(
+          children: [
+            Center(
+              child: TextButton(
+                onPressed: () {
+                  GetMechanicLocation getMechanicLocation =
+                      GetMechanicLocation();
+                  getMechanicLocation.getMechanicLocationMethod();
                 },
-                onError: (e) => print("Error completing: $e"),
-              );
-            } catch (e) {
-              print(e);
-            }
-          },
-          child: Text('get data'),
+                child: const Text('get data'),
+              ),
+            ),
+            Center(
+              child: TextButton(
+                onPressed: () {
+                  GetMechanicLocation getMechanicLocation =
+                      GetMechanicLocation();
+                  getMechanicLocation.getMechanicLocationMethod();
+                },
+                child: const Text('get data'),
+              ),
+            ),
+          ],
         ),
       ),
     );
