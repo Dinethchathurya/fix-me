@@ -13,7 +13,7 @@ class TaskData extends ChangeNotifier {
 
   getUsersLocationData() async {
     GetCurrentLocationClass getLocationClass = GetCurrentLocationClass();
-    await getLocationClass.getCurrentUserLocation();
+    // await getLocationClass.getCurrentUserLocation();
     currentLogUserLatitude = await getLocationClass.currentLogUserLatitude;
     currentLogUserLongitude = await getLocationClass.currentLogUserLongitude;
 
@@ -33,7 +33,7 @@ class TaskData extends ChangeNotifier {
   getLoggedUsersLocation() async {
     // this method for current user map screen only
     GetCurrentLocationClass getLocationClass = GetCurrentLocationClass();
-    await getLocationClass.getCurrentUserLocation();
+    // await getLocationClass.getCurrentUserLocation();
 
     currentLogUserLatitude = await getLocationClass.currentLogUserLatitude;
     currentLogUserLongitude = await getLocationClass.currentLogUserLongitude;

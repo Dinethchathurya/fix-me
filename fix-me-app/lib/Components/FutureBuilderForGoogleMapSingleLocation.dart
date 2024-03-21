@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 
-import '../Models/ModelsData.dart';
+import '../Services/GetCurrentLocation.dart';
 import 'GoogleMapComponent.dart';
 
 class FutureBuilderForGoogleMapSingleLocation extends StatelessWidget {
@@ -12,27 +12,26 @@ class FutureBuilderForGoogleMapSingleLocation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: Provider.of<TaskData>(context, listen: false)
-          .getLoggedUsersLocation(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
-          double currentLogUserLongitude =
-              Provider.of<TaskData>(context, listen: false)
-                  .currentLogUserLongitude;
-          double currentLogUserLatitude =
-              Provider.of<TaskData>(context, listen: false)
-                  .currentLogUserLatitude;
+    Provider.of<GetCurrentLocationClass>(context, listen: false)
+        .startListeningForLocationUpdates();
 
+    return Consumer<GetCurrentLocationClass>(
+      builder: (context, locationData, _) {
+        if (locationData.currentLogUserLongitude != null &&
+            locationData.currentLogUserLatitude != null) {
           return GoogleMapWidget(
-            cameraPositionLatLng:
-                LatLng(currentLogUserLatitude, currentLogUserLongitude),
+            cameraPositionLatLng: LatLng(
+              locationData.currentLogUserLatitude,
+              locationData.currentLogUserLongitude,
+            ),
             polylines: {},
             markers: <Marker>{
               Marker(
                 markerId: MarkerId('Log User Location'),
-                position:
-                    LatLng(currentLogUserLatitude, currentLogUserLongitude),
+                position: LatLng(
+                  locationData.currentLogUserLatitude,
+                  locationData.currentLogUserLongitude,
+                ),
               ),
             },
           );
