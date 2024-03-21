@@ -21,16 +21,16 @@ class FutureBuilderForGoogleMapSingleLocation extends StatelessWidget {
             locationData.currentLogUserLatitude != null) {
           return GoogleMapWidget(
             cameraPositionLatLng: LatLng(
-              locationData.currentLogUserLatitude,
-              locationData.currentLogUserLongitude,
+              locationData.currentLogUserLatitude ?? 0.0,
+              locationData.currentLogUserLongitude ?? 0.0,
             ),
             polylines: {},
             markers: <Marker>{
               Marker(
                 markerId: MarkerId('Log User Location'),
                 position: LatLng(
-                  locationData.currentLogUserLatitude,
-                  locationData.currentLogUserLongitude,
+                  locationData.currentLogUserLatitude ?? 0.0,
+                  locationData.currentLogUserLongitude ?? 0.0,
                 ),
               ),
             },

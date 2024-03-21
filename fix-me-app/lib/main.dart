@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
       builder: (BuildContext context, Widget) {
         return MaterialApp(
           theme: ThemeData.light(),
-          initialRoute: '/test',
+          initialRoute: '/',
           routes: {
             '/': (context) => Login(),
             '/register': (context) => Register(),

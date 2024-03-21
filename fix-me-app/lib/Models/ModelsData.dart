@@ -14,8 +14,10 @@ class TaskData extends ChangeNotifier {
   getUsersLocationData() async {
     GetCurrentLocationClass getLocationClass = GetCurrentLocationClass();
     // await getLocationClass.getCurrentUserLocation();
-    currentLogUserLatitude = await getLocationClass.currentLogUserLatitude;
-    currentLogUserLongitude = await getLocationClass.currentLogUserLongitude;
+    currentLogUserLatitude =
+        await getLocationClass.currentLogUserLatitude ?? 0.0;
+    currentLogUserLongitude =
+        await getLocationClass.currentLogUserLongitude ?? 0.0;
 
     GetMechanicLocation getMechanicLocation = GetMechanicLocation();
     await getMechanicLocation.getMechanicLocationMethod();
@@ -35,7 +37,9 @@ class TaskData extends ChangeNotifier {
     GetCurrentLocationClass getLocationClass = GetCurrentLocationClass();
     // await getLocationClass.getCurrentUserLocation();
 
-    currentLogUserLatitude = await getLocationClass.currentLogUserLatitude;
-    currentLogUserLongitude = await getLocationClass.currentLogUserLongitude;
+    currentLogUserLatitude =
+        await getLocationClass.currentLogUserLatitude ?? 0.0;
+    currentLogUserLongitude =
+        await getLocationClass.currentLogUserLongitude ?? 0.0;
   }
 }
