@@ -15,7 +15,7 @@ class RatingBottomSheet extends StatelessWidget {
           ),
           SizedBox(height: 20.0),
           Text(
-            'Same person',
+            'You met the same person as in the above picture.',
             style: TextStyle(
               fontSize: 20.0,
               fontWeight: FontWeight.bold,
