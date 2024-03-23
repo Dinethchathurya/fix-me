@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:geolocator/geolocator.dart';
@@ -9,7 +8,7 @@ import 'package:geolocator/geolocator.dart';
 class GetCurrentLocationClass extends ChangeNotifier {
   double? currentLogUserLongitude;
   double? currentLogUserLatitude;
-  final auth = FirebaseAuth.instance;
+
   Position? _previousPosition;
 
   StreamSubscription<Position>? _positionStreamSubscription;
@@ -18,7 +17,7 @@ class GetCurrentLocationClass extends ChangeNotifier {
 
   void startListeningForLocationUpdates() {
     _positionStreamSubscription = Geolocator.getPositionStream().listen(
-      (Position position) async {
+      (Position position) {
         if (_previousPosition != null) {
           // Calculate the distance between the current and previous positions
           double distanceInMeters = Geolocator.distanceBetween(
@@ -62,10 +61,10 @@ class GetCurrentLocationClass extends ChangeNotifier {
 
   void _checkAndAddUserLocation(double latitude, double longitude) async {
     try {
-      // Check if the user's location document exists in the 'location' collection
+      // Check if the user's location document exists in the 'user_location' collection
       DocumentSnapshot snapshot = await _databaseReference
-          .collection('available-mechanic-location')
-          .doc('${auth.currentUser?.uid}')
+          .collection('user_location')
+          .doc('user_location')
           .get();
 
       if (!snapshot.exists) {
@@ -77,16 +76,10 @@ class GetCurrentLocationClass extends ChangeNotifier {
     }
   }
 
-  void _updateDatabaseWithLocation(double latitude, double longitude) async {
-    final auth = FirebaseAuth.instance;
-    _databaseReference
-        .collection('available-mechanic-location')
-        .doc('${auth.currentUser?.uid}')
-        .set({
+  void _updateDatabaseWithLocation(double latitude, double longitude) {
+    _databaseReference.collection('user_location').doc('user_location').set({
       'latitude': latitude,
       'longitude': longitude,
-      'email': auth.currentUser?.email,
-      'mechanic-user-id': auth.currentUser?.uid,
     });
   }
 

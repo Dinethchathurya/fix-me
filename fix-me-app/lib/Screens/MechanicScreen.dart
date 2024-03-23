@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../Components/CosumerWidgetForMechanicMap1.dart';
+import '../Components/FutureBuilderForGoogleMapSingleLocation.dart';
 
 class MechanicScreen extends StatefulWidget {
   const MechanicScreen({super.key});
@@ -18,7 +18,7 @@ class _MechanicScreenState extends State<MechanicScreen> {
         title: Text('Mechanic Home Screen'),
       ),
       body: Center(
-        child: FutureBuilderForGoogleMapSingleLocationForMechanicMap1(),
+        child: FutureBuilderForGoogleMapSingleLocation(),
       ),
     );
   }

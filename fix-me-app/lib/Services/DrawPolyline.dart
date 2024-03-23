@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import '../Consts /Consts.dart';
+
 class DrawPolyline {
   late Map<PolylineId, Polyline> polylines = {};
   var currentLogUserLatitude;
   var currentLogUserLongitude;
   var nearestMechanicLocationLatitude;
   var nearestMechanicLocationLongitude;
-  var googleApiKey = 'AIzaSyDNwmSnZ9YxQmGDuAdFnDhp2RiF_OYAPH4';
 
   Future<List<LatLng>> getPolylinePoints() async {
     List<LatLng> polyLineCordinates = [];
