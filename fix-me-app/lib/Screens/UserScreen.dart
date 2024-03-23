@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../Components/FutureBuilderForGoogleMapSingleLocation.dart';
+import '../Components/CosumerWidgetForUserMap1.dart';
 
 class UserScreen extends StatefulWidget {
   const UserScreen({super.key});
@@ -18,7 +18,7 @@ class _UserScreenState extends State<UserScreen> {
         backgroundColor: Color(0xFF39ACE7),
       ),
       body: Center(
-        child: FutureBuilderForGoogleMapSingleLocation(),
+        child: FutureBuilderForGoogleMapSingleLocationForUserMap1(),
       ),
     );
   }

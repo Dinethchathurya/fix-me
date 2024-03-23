@@ -2,7 +2,7 @@ import 'package:fix_me_app/Services/GetMechanicLocation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-import '../Services/GetCurrentLocation.dart';
+import '../Services/GetCurrentLocationAndUpdateDatabase.dart';
 
 class TaskData extends ChangeNotifier {
   late double nearestMechanicLocationLatitude;

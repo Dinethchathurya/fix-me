@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 
-import '../Services/GetCurrentLocation.dart';
+import '../Services/GetCurrentLocationAndUpdateDatabase.dart';
 import 'GoogleMapComponent.dart';
 
-class FutureBuilderForGoogleMapSingleLocation extends StatelessWidget {
-  const FutureBuilderForGoogleMapSingleLocation({
+class FutureBuilderForGoogleMapSingleLocationForMechanicMap1
+    extends StatelessWidget {
+  const FutureBuilderForGoogleMapSingleLocationForMechanicMap1({
     super.key,
   });
 
@@ -14,7 +15,6 @@ class FutureBuilderForGoogleMapSingleLocation extends StatelessWidget {
   Widget build(BuildContext context) {
     Provider.of<GetCurrentLocationClass>(context, listen: false)
         .startListeningForLocationUpdates();
-
     return Consumer<GetCurrentLocationClass>(
       builder: (context, locationData, _) {
         if (locationData.currentLogUserLongitude != null &&
