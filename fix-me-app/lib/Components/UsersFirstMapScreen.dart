@@ -2,20 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 
-import '../Services/GetCurrentLocation.dart';
+import '../Services/GetUserCurrentLocationForFirstMap.dart';
 import 'GoogleMapComponent.dart';
 
-class GoogleMapForMechanicOnlineScreenLocation extends StatelessWidget {
-  const GoogleMapForMechanicOnlineScreenLocation({
+class UsersFirstMapScreen extends StatelessWidget {
+  const UsersFirstMapScreen({
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<GetCurrentLocationClass>(context, listen: false)
-        .startListeningForLocationUpdates();
+    Provider.of<GetCurrentLocationClassForFirstMapPage>(context, listen: false)
+        .startListeningForLocationUpdatesForFirstMapPage();
 
-    return Consumer<GetCurrentLocationClass>(
+    return Consumer<GetCurrentLocationClassForFirstMapPage>(
       builder: (context, locationData, _) {
         if (locationData.currentLogUserLongitude != null &&
             locationData.currentLogUserLatitude != null) {

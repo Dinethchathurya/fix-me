@@ -3,12 +3,13 @@ import 'package:fix_me_app/Services/Notification.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'Components/FutureBuilderForGoogleMapSingleLocation.dart';
 import 'Models/ModelsData.dart';
 import 'Screens/LoginScreen.dart';
 import 'Screens/MapScreen.dart';
+import 'Screens/MechanicOnlineScreen.dart';
 import 'Screens/RegisterScreen.dart';
 import 'Services/GetCurrentLocation.dart';
+import 'Services/GetUserCurrentLocationForFirstMap.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -36,6 +37,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<GetCurrentLocationClass>(
           create: (context) => GetCurrentLocationClass(),
         ),
+        ChangeNotifierProvider<GetCurrentLocationClassForFirstMapPage>(
+          create: (context) => GetCurrentLocationClassForFirstMapPage(),
+        ),
       ],
       builder: (BuildContext context, Widget) {
         return MaterialApp(
@@ -44,8 +48,10 @@ class MyApp extends StatelessWidget {
           routes: {
             '/': (context) => Login(),
             '/register': (context) => Register(),
+            '/mechanicOnlineMapScreen': (context) => MechanicOnlineScreen(),
             '/map': (context) => MapScreen(),
-            '/test': (context) => FutureBuilderForGoogleMapSingleLocation(),
+
+            //   '/test': (context) => FutureBuilderForGoogleMapSingleLocation(),
           },
         );
       },
