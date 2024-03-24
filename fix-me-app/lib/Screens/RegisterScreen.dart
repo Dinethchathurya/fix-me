@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fix_me_app/Screens/LoginScreen.dart';
@@ -6,6 +8,7 @@ import 'package:fix_me_app/Screens/MechanicScreen.dart';
 import 'package:fix_me_app/Screens/UserScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:fix_me_app/Screens/AuthPage.dart';
+import 'package:image_picker/image_picker.dart';
 
 class Register extends StatefulWidget {
   const Register({super.key});
@@ -18,9 +21,59 @@ class _RegisterState extends State<Register> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-  final contactnumberController = TextEditingController();
   final roleController = TextEditingController();
   bool _isObscuredText = false;
+
+  // Create a variable called '_image' of type 'File'. This variable can potentially be nullable.
+  File? _image;
+
+  // The '_showUploadOptions' is an asynchronous function that shows a bottom sheet.
+  // It pauses the execution of the function when the 'await' keyword is encountered and resumes it's execution once a result is returned after the operation has been successfully completed.
+  Future<void> _showUploadOptions() async {
+    await showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        // The 'Wrap' widget is wrapped around a 'Container' widget that consists of two 'children' widgets in the bottom sheet.
+        return Container(
+          child: Wrap(
+            children: <Widget>[
+              ListTile(
+                leading: Icon(Icons.camera),
+                title: Text("Open Camera"),
+                onTap: () {
+                  Navigator.pop(context);
+                  _pickImageFromCamera();
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.photo_library),
+                title: Text("Browse Files On Device"),
+                onTap: () {
+                  Navigator.pop(context);
+                  _pickImageFromCamera();
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  // The '_pickImageFromCamera' is another asynchronous function that creates an instance of the 'ImagePicker()' that is provided from the 'image_picker' flutter package.
+  // The function is haulted until the user opens the camera. Once the camera is opened the function resumes it's execution.
+  // If any image is selected it will be set as the image path.
+  Future<void> _pickImageFromCamera() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.camera);
+
+    if (pickedFile != null) {
+      setState(() {
+        // The '_image' variable is of type 'File'.
+        _image = File(pickedFile.path);
+      });
+    }
+  }
 
   // Create a variable called 'selectedRole' that may or may not be null.
   String? selectedRole;
