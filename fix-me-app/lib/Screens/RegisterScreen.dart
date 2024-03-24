@@ -50,7 +50,7 @@ class _RegisterState extends State<Register> {
                 title: Text("Browse Files On Device"),
                 onTap: () {
                   Navigator.pop(context);
-                  _pickImageFromCamera();
+                  _pickImageFromDevice();
                 },
               ),
             ],
@@ -383,6 +383,9 @@ class _RegisterState extends State<Register> {
                             ),
                         ],
                       ),
+                    const SizedBox(
+                      height: 30,
+                    ),
                     Center(
                       child: SizedBox(
                         width: 200,
