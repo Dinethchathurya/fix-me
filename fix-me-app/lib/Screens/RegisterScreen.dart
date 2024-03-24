@@ -60,7 +60,7 @@ class _RegisterState extends State<Register> {
     );
   }
 
-  // The '_pickImageFromCamera' is another asynchronous function that creates an instance of the 'ImagePicker()' that is provided from the 'image_picker' flutter package.
+  // The '_pickImageFromCamera' is an asynchronous function that creates an instance of the 'ImagePicker()' that is provided from the 'image_picker' flutter package.
   // The function is haulted until the user opens the camera. Once the camera is opened the function resumes it's execution.
   // If any image is selected it will be set as the image path.
   Future<void> _pickImageFromCamera() async {
@@ -70,6 +70,20 @@ class _RegisterState extends State<Register> {
     if (pickedFile != null) {
       setState(() {
         // The '_image' variable is of type 'File'.
+        _image = File(pickedFile.path);
+      });
+    }
+  }
+
+  // The '_pickImageFromDevice' is another asynchronous function that creates an instance of the 'ImagePicker()' that is provided from the 'image_picker' flutter package.
+  // The function is haulted until the user clicks on the list tile to browse through the files present within the device. Once the files are opened the function resumes it's execution.
+  // If any image is selected it will be set as the image path.
+  Future<void> _pickImageFromDevice() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      setState(() {
         _image = File(pickedFile.path);
       });
     }
@@ -312,9 +326,63 @@ class _RegisterState extends State<Register> {
                         return null;
                       },
                     ),
-                    SizedBox(
-                      height: 50,
+                    const SizedBox(
+                      height: 20,
                     ),
+                    if (selectedRole == 'Mechanic')
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            "Upload Photo",
+                            style: TextStyle(
+                              fontSize: 22,
+                              fontWeight: FontWeight.normal,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Center(
+                            child: ElevatedButton(
+                              onPressed: _showUploadOptions,
+                              child: Text(
+                                "Upload Photo",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 20,
+                                ),
+                              ),
+                              style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                  Color(0xFF39ACE7),
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 20),
+                          if (_image != null)
+                            Padding(
+                              padding: const EdgeInsets.only(top: 10),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.grey,
+                                  borderRadius: BorderRadius.circular(20.0),
+                                ),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(20.0),
+                                  child: Image.file(
+                                    _image!,
+                                    fit: BoxFit.cover,
+                                    width: double.infinity,
+                                    height: 200,
+                                  ),
+                                ),
+                              ),
+                            ),
+                        ],
+                      ),
                     Center(
                       child: SizedBox(
                         width: 200,
@@ -337,7 +405,7 @@ class _RegisterState extends State<Register> {
                       ),
                     ),
                     SizedBox(
-                      height: 30,
+                      height: 10,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
