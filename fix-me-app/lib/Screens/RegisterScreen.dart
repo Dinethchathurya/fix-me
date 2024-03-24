@@ -128,6 +128,8 @@ class _RegisterState extends State<Register> {
           'email': emailController.text,
           'role': selectedRole, // Set selected role from dropdown
           'registrationTimestamp': timestamp,
+          // Store the 'URL' of the image in the database, if it is available.
+          'imageURL': _image != null ? _image!.path : null,
         });
 
         // Determine which screen to navigate to based on the selected role.
