@@ -1,9 +1,10 @@
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 
-class GetMechanicLocation {
+class GetMechanicLocation extends ChangeNotifier {
   late double nearestMechanicLocationLongitude;
   late double nearestMechanicLocationLatitude;
   var indexOfLowestDistance = 0;
@@ -145,13 +146,5 @@ class GetMechanicLocation {
     await callDistanceMatrixApi(distanceMatrixUrl);
     // find out nearest mechanic form response.
     setMechanicLocationInVariable();
-
-    print('nearest mechanic Latitude: $nearestMechanicLocationLatitude');
-    print('nearest mechanic Longitude: $nearestMechanicLocationLongitude');
-    print('user address$originAddresses');
-    print(
-        'nearest mechanic address${destinationAddresses[indexOfLowestDistance]}');
-    print(duration[indexOfLowestDistance]);
-    print('mechanics token ${token[indexOfLowestDistance]}');
   }
 }

@@ -1,4 +1,5 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/cupertino.dart';
 
 class NotificationClass {
   getFcmTokenForNotification() async {
@@ -19,5 +20,9 @@ class NotificationClass {
     } catch (e) {
       print('case :$e');
     }
+  }
+
+  void handleMessage(BuildContext context, RemoteMessage message) {
+    //
   }
 }
