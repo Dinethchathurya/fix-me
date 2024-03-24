@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../Components/UsersFirstMapScreen.dart';
-import '../Services/GetUserCurrentLocationForFirstMap.dart';
 
 class MechanicScreen extends StatefulWidget {
   const MechanicScreen({super.key});
@@ -16,10 +14,11 @@ class _MechanicScreenState extends State<MechanicScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
+        backgroundColor: Color(0xFF39ACE7),
         onPressed: () {
-          Provider.of<GetCurrentLocationClassForFirstMapPage>(context,
-                  listen: false)
-              .startListeningForLocationUpdatesForFirstMapPage();
+          // Provider.of<GetCurrentLocationClassForFirstMapPage>(context,
+          //         listen: false)
+          //     .stopListeningForLocationUpdatesForFirstMapPage();
           Navigator.pushNamed(context, '/mechanicOnlineMapScreen');
         },
         label: const Text('Go Online'),

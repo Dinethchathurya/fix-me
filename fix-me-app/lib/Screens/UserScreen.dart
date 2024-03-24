@@ -1,8 +1,7 @@
+import 'package:fix_me_app/Services/GetMechanicLocation.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../Components/UsersFirstMapScreen.dart';
-import '../Services/GetUserCurrentLocationForFirstMap.dart';
 
 class UserScreen extends StatefulWidget {
   const UserScreen({super.key});
@@ -16,10 +15,14 @@ class _UserScreenState extends State<UserScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
+        backgroundColor: Color(0xFF39ACE7),
         onPressed: () {
-          Provider.of<GetCurrentLocationClassForFirstMapPage>(context,
-                  listen: false)
-              .startListeningForLocationUpdatesForFirstMapPage();
+          // Provider.of<GetCurrentLocationClassForFirstMapPage>(context,
+          //         listen: false)
+          //     .stopListeningForLocationUpdatesForFirstMapPage();
+
+          GetMechanicLocation getMechanicLocation = GetMechanicLocation();
+          getMechanicLocation.getMechanicLocationMethod();
         },
         label: const Text('Confirm Request '),
       ),
