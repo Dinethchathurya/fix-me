@@ -1,4 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:fix_me_app/Services/Notification.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -14,8 +15,10 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
-    name: 'fix-me-app-d8065',
+    // name: 'fix-me-app-d8065',
   );
+  NotificationClass notificationClass = NotificationClass();
+  await notificationClass.getFcmTokenForNotification();
 
   runApp(MyApp());
 }

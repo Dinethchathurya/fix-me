@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fix_me_app/Services/Notification.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:geolocator/geolocator.dart';
@@ -14,6 +16,7 @@ class GetCurrentLocationClass extends ChangeNotifier {
   StreamSubscription<Position>? _positionStreamSubscription;
 
   final _databaseReference = FirebaseFirestore.instance;
+  final auth = FirebaseAuth.instance;
 
   void startListeningForLocationUpdates() {
     _positionStreamSubscription = Geolocator.getPositionStream().listen(
@@ -63,8 +66,8 @@ class GetCurrentLocationClass extends ChangeNotifier {
     try {
       // Check if the user's location document exists in the 'user_location' collection
       DocumentSnapshot snapshot = await _databaseReference
-          .collection('user_location')
-          .doc('user_location')
+          .collection('available_mechanic_location')
+          .doc('${auth.currentUser?.uid}')
           .get();
 
       if (!snapshot.exists) {
@@ -76,10 +79,17 @@ class GetCurrentLocationClass extends ChangeNotifier {
     }
   }
 
-  void _updateDatabaseWithLocation(double latitude, double longitude) {
-    _databaseReference.collection('user_location').doc('user_location').set({
+  void _updateDatabaseWithLocation(double latitude, double longitude) async {
+    NotificationClass notificationClass = NotificationClass();
+
+    _databaseReference
+        .collection('available_mechanic_location')
+        .doc('${auth.currentUser?.uid}')
+        .set({
       'latitude': latitude,
       'longitude': longitude,
+      'cfm token': await notificationClass.getFcmTokenForNotification(),
+      'email': auth.currentUser?.email,
     });
   }
 

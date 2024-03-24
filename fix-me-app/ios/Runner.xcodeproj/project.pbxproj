@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0BF805972BAFDC75002CEA2E /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BF805952BAFDC71002CEA2E /* UserNotifications.framework */; };
+		0BF805982BAFDC75002CEA2E /* UserNotifications.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0BF805952BAFDC71002CEA2E /* UserNotifications.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */ = {isa = PBXBuildFile; fileRef = 1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */; };
 		331C808B294A63AB00263BE5 /* RunnerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 331C807B294A618700263BE5 /* RunnerTests.swift */; };
 		3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */; };
@@ -36,6 +38,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				0BF805982BAFDC75002CEA2E /* UserNotifications.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -43,6 +46,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0BF805952BAFDC71002CEA2E /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		1498D2321E8E86230040F4C2 /* GeneratedPluginRegistrant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GeneratedPluginRegistrant.h; sourceTree = "<group>"; };
 		1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneratedPluginRegistrant.m; sourceTree = "<group>"; };
 		331C807B294A618700263BE5 /* RunnerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunnerTests.swift; sourceTree = "<group>"; };
@@ -74,6 +78,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0BF805972BAFDC75002CEA2E /* UserNotifications.framework in Frameworks */,
 				B07B65F1E641DDB907B8BC86 /* Pods_Runner.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -100,6 +105,7 @@
 		526C0EEA29AA7C9A6384D906 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0BF805952BAFDC71002CEA2E /* UserNotifications.framework */,
 				407417C970FE53E8684FDA44 /* Pods_Runner.framework */,
 				8EF0DB6AE80332024B03D9E5 /* Pods_RunnerTests.framework */,
 			);
@@ -116,7 +122,6 @@
 				6549EA0D221E2DF211489568 /* Pods-RunnerTests.release.xcconfig */,
 				375EA9425318DB330B0238B6 /* Pods-RunnerTests.profile.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
