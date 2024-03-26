@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fix_me_app/Screens/LoginScreen.dart';
@@ -6,6 +8,7 @@ import 'package:fix_me_app/Screens/MechanicScreen.dart';
 import 'package:fix_me_app/Screens/UserScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:fix_me_app/Screens/AuthPage.dart';
+import 'package:image_picker/image_picker.dart';
 
 class Register extends StatefulWidget {
   const Register({super.key});
@@ -18,9 +21,73 @@ class _RegisterState extends State<Register> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-  final contactnumberController = TextEditingController();
   final roleController = TextEditingController();
   bool _isObscuredText = false;
+
+  // Create a variable called '_image' of type 'File'. This variable can potentially be nullable.
+  File? _image;
+
+  // The '_showUploadOptions' is an asynchronous function that shows a bottom sheet.
+  // It pauses the execution of the function when the 'await' keyword is encountered and resumes it's execution once a result is returned after the operation has been successfully completed.
+  Future<void> _showUploadOptions() async {
+    await showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        // The 'Wrap' widget is wrapped around a 'Container' widget that consists of two 'children' widgets in the bottom sheet.
+        return Container(
+          child: Wrap(
+            children: <Widget>[
+              ListTile(
+                leading: Icon(Icons.camera),
+                title: Text("Open Camera"),
+                onTap: () {
+                  Navigator.pop(context);
+                  _pickImageFromCamera();
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.photo_library),
+                title: Text("Browse Files On Device"),
+                onTap: () {
+                  Navigator.pop(context);
+                  _pickImageFromDevice();
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  // The '_pickImageFromCamera' is an asynchronous function that creates an instance of the 'ImagePicker()' that is provided from the 'image_picker' flutter package.
+  // The function is haulted until the user opens the camera. Once the camera is opened the function resumes it's execution.
+  // If any image is selected it will be set as the image path.
+  Future<void> _pickImageFromCamera() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.camera);
+
+    if (pickedFile != null) {
+      setState(() {
+        // The '_image' variable is of type 'File'.
+        _image = File(pickedFile.path);
+      });
+    }
+  }
+
+  // The '_pickImageFromDevice' is another asynchronous function that creates an instance of the 'ImagePicker()' that is provided from the 'image_picker' flutter package.
+  // The function is haulted until the user clicks on the list tile to browse through the files present within the device. Once the files are opened the function resumes it's execution.
+  // If any image is selected it will be set as the image path.
+  Future<void> _pickImageFromDevice() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      setState(() {
+        _image = File(pickedFile.path);
+      });
+    }
+  }
 
   // Create a variable called 'selectedRole' that may or may not be null.
   String? selectedRole;
@@ -75,6 +142,8 @@ class _RegisterState extends State<Register> {
           'email': emailController.text,
           'role': selectedRole, // Set selected role from dropdown
           'registrationTimestamp': timestamp,
+          // Store the 'URL' of the image in the database, if it is available.
+          'imageURL': _image != null ? _image!.path : null,
         });
 
         // Determine which screen to navigate to based on the selected role.
@@ -257,8 +326,65 @@ class _RegisterState extends State<Register> {
                         return null;
                       },
                     ),
-                    SizedBox(
-                      height: 50,
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    if (selectedRole == 'Mechanic')
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            "Upload Photo",
+                            style: TextStyle(
+                              fontSize: 22,
+                              fontWeight: FontWeight.normal,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Center(
+                            child: ElevatedButton(
+                              onPressed: _showUploadOptions,
+                              child: Text(
+                                "Upload Photo",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 20,
+                                ),
+                              ),
+                              style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                  Color(0xFF39ACE7),
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 20),
+                          if (_image != null)
+                            Padding(
+                              padding: const EdgeInsets.only(top: 10),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.grey,
+                                  borderRadius: BorderRadius.circular(20.0),
+                                ),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(20.0),
+                                  child: Image.file(
+                                    _image!,
+                                    fit: BoxFit.cover,
+                                    width: double.infinity,
+                                    height: 200,
+                                  ),
+                                ),
+                              ),
+                            ),
+                        ],
+                      ),
+                    const SizedBox(
+                      height: 30,
                     ),
                     Center(
                       child: SizedBox(
@@ -282,7 +408,7 @@ class _RegisterState extends State<Register> {
                       ),
                     ),
                     SizedBox(
-                      height: 30,
+                      height: 10,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
