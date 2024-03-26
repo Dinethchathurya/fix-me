@@ -647,12 +647,21 @@ PODS:
   - Firebase/Firestore (10.22.0):
     - Firebase/CoreOnly
     - FirebaseFirestore (~> 10.22.0)
+    
+  - Firebase/Messaging (10.22.0):
+    - Firebase/CoreOnly
+    - FirebaseMessaging (~> 10.22.0)
   - firebase_auth (4.17.9):
+
     - Firebase/Auth (= 10.22.0)
     - firebase_core
     - Flutter
   - firebase_core (2.27.1):
     - Firebase/CoreOnly (= 10.22.0)
+    - Flutter
+  - firebase_messaging (14.7.20):
+    - Firebase/Messaging (= 10.22.0)
+    - firebase_core
     - Flutter
   - FirebaseAppCheckInterop (10.22.0)
   - FirebaseAuth (10.22.0):
@@ -689,6 +698,20 @@ PODS:
     - "gRPC-C++ (~> 1.49.1)"
     - leveldb-library (~> 1.22)
     - nanopb (< 2.30911.0, >= 2.30908.0)
+  - FirebaseInstallations (10.23.0):
+    - FirebaseCore (~> 10.0)
+    - GoogleUtilities/Environment (~> 7.8)
+    - GoogleUtilities/UserDefaults (~> 7.8)
+    - PromisesObjC (~> 2.1)
+  - FirebaseMessaging (10.22.0):
+    - FirebaseCore (~> 10.0)
+    - FirebaseInstallations (~> 10.0)
+    - GoogleDataTransport (~> 9.3)
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.8)
+    - GoogleUtilities/Environment (~> 7.8)
+    - GoogleUtilities/Reachability (~> 7.8)
+    - GoogleUtilities/UserDefaults (~> 7.8)
+    - nanopb (< 2.30911.0, >= 2.30908.0)
   - FirebaseSharedSwift (10.22.0)
   - Flutter (1.0.0)
   - geolocator_apple (1.2.0):
@@ -696,6 +719,10 @@ PODS:
   - google_maps_flutter_ios (0.0.1):
     - Flutter
     - GoogleMaps (< 9.0)
+  - GoogleDataTransport (9.4.1):
+    - GoogleUtilities/Environment (~> 7.7)
+    - nanopb (< 2.30911.0, >= 2.30908.0)
+    - PromisesObjC (< 3.0, >= 1.2)
   - GoogleMaps (6.2.1):
     - GoogleMaps/Maps (= 6.2.1)
   - GoogleMaps/Base (6.2.1)
@@ -721,6 +748,9 @@ PODS:
     - GoogleUtilities/Privacy
   - GoogleUtilities/Privacy (7.13.0)
   - GoogleUtilities/Reachability (7.13.0):
+    - GoogleUtilities/Logger
+    - GoogleUtilities/Privacy
+  - GoogleUtilities/UserDefaults (7.13.0):
     - GoogleUtilities/Logger
     - GoogleUtilities/Privacy
   - "gRPC-C++ (1.49.1)":
@@ -798,6 +828,7 @@ DEPENDENCIES:
   - cloud_firestore (from `.symlinks/plugins/cloud_firestore/ios`)
   - firebase_auth (from `.symlinks/plugins/firebase_auth/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
+  - firebase_messaging (from `.symlinks/plugins/firebase_messaging/ios`)
   - Flutter (from `Flutter`)
   - geolocator_apple (from `.symlinks/plugins/geolocator_apple/ios`)
   - google_maps_flutter_ios (from `.symlinks/plugins/google_maps_flutter_ios/ios`)
@@ -814,7 +845,10 @@ SPEC REPOS:
     - FirebaseCoreInternal
     - FirebaseFirestore
     - FirebaseFirestoreInternal
+    - FirebaseInstallations
+    - FirebaseMessaging
     - FirebaseSharedSwift
+    - GoogleDataTransport
     - GoogleMaps
     - GoogleUtilities
     - "gRPC-C++"
@@ -832,6 +866,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/firebase_auth/ios"
   firebase_core:
     :path: ".symlinks/plugins/firebase_core/ios"
+  firebase_messaging:
+    :path: ".symlinks/plugins/firebase_messaging/ios"
   Flutter:
     :path: Flutter
   geolocator_apple:
@@ -844,8 +880,11 @@ SPEC CHECKSUMS:
   BoringSSL-GRPC: 3175b25143e648463a56daeaaa499c6cb86dad33
   cloud_firestore: 9d69182af1d677062f005584ca5470a19e1f68e7
   Firebase: 797fd7297b7e1be954432743a0b3f90038e45a71
+
   firebase_auth: 610184b4f624545f81e0416bca60642b6818f27f
   firebase_core: d6dfb4cb86a9ebd92464bb8736075fe967211c97
+  firebase_messaging: f97062a3a7644703ba4892859183c0a59e08d25f
+
   FirebaseAppCheckInterop: 58db3e9494751399cf3e7b7e3e705cff71099153
   FirebaseAuth: bbe4c68f958504ba9e54aee181adbdf5b664fbc6
   FirebaseCore: 0326ec9b05fbed8f8716cddbf0e36894a13837f7
@@ -853,10 +892,13 @@ SPEC CHECKSUMS:
   FirebaseCoreInternal: bca337352024b18424a61e478460547d46c4c753
   FirebaseFirestore: 16cb8a85fc29da272deaed22a101e24703251da9
   FirebaseFirestoreInternal: 86fe6fc8ca156309cb4842d2d7b2f15c669a64a0
+  FirebaseInstallations: 42d6ead4605d6eafb3b6683674e80e18eb6f2c35
+  FirebaseMessaging: 9f71037fd9db3376a4caa54e5a3949d1027b4b6e
   FirebaseSharedSwift: 48076404e6e52372290d15a07d2ed1d2f1754023
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   geolocator_apple: 6cbaf322953988e009e5ecb481f07efece75c450
   google_maps_flutter_ios: f135b968a67c05679e0a53538e900b5c174b0d99
+  GoogleDataTransport: 6c09b596d841063d76d4288cc2d2f42cc36e1e2a
   GoogleMaps: 20d7b12be49a14287f797e88e0e31bc4156aaeb4
   GoogleUtilities: d053d902a8edaa9904e1bd00c37535385b8ed152
   "gRPC-C++": 2df8cba576898bdacd29f0266d5236fa0e26ba6a
@@ -869,4 +911,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 819463e6a0290f5a72f145ba7cde16e8b6ef0796
 
-COCOAPODS: 1.14.3
+COCOAPODS: 1.15.2

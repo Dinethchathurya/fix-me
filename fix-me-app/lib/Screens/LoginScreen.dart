@@ -20,7 +20,7 @@ class _LoginState extends State<Login> {
   final passwordController = TextEditingController();
   bool _isObscuredText = false;
 
-  // This method calls the 'signInUser' method when the 'Log In' button is clicked.
+  // This method calls the 'signUserIn' method when the 'Log In' button is clicked.
   Future<void> signUserIn() async {
     try {
       // Signs in the user based on  the provided user credentials.
