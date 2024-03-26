@@ -1,39 +1,37 @@
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 
-class GetMechanicLocation {
+class GetMechanicLocation extends ChangeNotifier {
   late double nearestMechanicLocationLongitude;
   late double nearestMechanicLocationLatitude;
   var indexOfLowestDistance = 0;
-  var lowestDistance;
 
   List<dynamic> originAddresses = [];
   List<dynamic> destinationAddresses = [];
+  List<dynamic> destinations = [];
 
-  List<double> usersLocation = [6.839318, 80.021566];
+  List<double> usersLocation = [37.4218883, -122.085];
   List<List<double>> mechanicLocations = [];
   List<String> duration = [];
 
-  List<String> emails = [];
+  List<String> token = [];
 
   getMechanicLocationsFromFirebase() async {
-    // Initialize the list to store mechanic locations.
-
     // Get locations from the Firestore database.
     final db = FirebaseFirestore.instance;
     try {
-      await db.collection("location").get().then(
+      await db.collection("available_mechanic_location").get().then(
         (querySnapshot) {
           for (var docSnapshot in querySnapshot.docs) {
             // Extract latitude and longitude from each document
             double latitude = docSnapshot.data()['latitude'];
             double longitude = docSnapshot.data()['longitude'];
 
-            emails.add(docSnapshot.data()['email']);
-
-            // Add latitude and longitude to the mechanicLocations list
+            token.add(docSnapshot.data()['cfm token']);
+            // add items to token list
             mechanicLocations.add([latitude, longitude]);
           }
         },
@@ -45,10 +43,12 @@ class GetMechanicLocation {
 
   String buildDistanceMatrixApiUrl() {
     List<double> origins = usersLocation;
+
     List<List<double>> destinations = mechanicLocations;
 
     String apiKey = 'AIzaSyDNwmSnZ9YxQmGDuAdFnDhp2RiF_OYAPH4';
     String url = buildDistanceMatrixUrl(origins, destinations, apiKey);
+
     return url;
   }
 
@@ -71,14 +71,13 @@ class GetMechanicLocation {
 
       // Check if the request was successful (status code 200).
       if (response.statusCode == 200) {
-        // Parse the JSON response.
         // You can handle the response data here.
         Map<String, dynamic> apiResponse = jsonDecode(response.body);
         originAddresses = jsonDecode(response.body)['origin_addresses'];
         destinationAddresses =
             jsonDecode(response.body)['destination_addresses'];
 
-        lowestDistance = getNearestMechanicLocation(apiResponse);
+        getNearestMechanicLocation(apiResponse);
       } else {
         // Handle error response.
         print('Error: ${response.statusCode}');
@@ -89,13 +88,10 @@ class GetMechanicLocation {
     }
   }
 
-  double getNearestMechanicLocation(Map<String, dynamic> apiResponse) {
+  int getNearestMechanicLocation(Map<String, dynamic> apiResponse) {
     // find out nearest mechanic form response.
     // To get count of elements.
     List<dynamic> elements = apiResponse['rows'][0]['elements'];
-
-    // to store destinations as strings for calculation.
-    List<dynamic> destinations = [];
 
     for (var j = 0; j < elements.length; j++) {
       destinations
@@ -115,7 +111,7 @@ class GetMechanicLocation {
       }
     }
 
-    return lowestDistance;
+    return indexOfLowestDistance;
   }
 
   double parseDistance(String distanceText) {
@@ -124,7 +120,6 @@ class GetMechanicLocation {
     double value = double.parse(parts[0]);
     String unit = parts[1].toLowerCase();
 
-    // Convert all units to meters for comparison.
     switch (unit) {
       case 'mi':
         return value;
@@ -151,14 +146,5 @@ class GetMechanicLocation {
     await callDistanceMatrixApi(distanceMatrixUrl);
     // find out nearest mechanic form response.
     setMechanicLocationInVariable();
-
-    print('nearest mechanic Latitude: $nearestMechanicLocationLatitude');
-    print('nearest mechanic Longitude: $nearestMechanicLocationLongitude');
-    print('user address$originAddresses');
-    print(
-        'nearest mechanic address${destinationAddresses[indexOfLowestDistance]}');
-    print(duration[indexOfLowestDistance]);
-    print('$lowestDistance meters');
-    print('mechanics email ${emails[indexOfLowestDistance]}');
   }
 }

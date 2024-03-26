@@ -1,7 +1,10 @@
+
 import 'package:fix_me_app/Screens/MapScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
+import '../Components/UsersFirstMapScreen.dart';
 
 class MechanicScreen extends StatefulWidget {
   const MechanicScreen({Key? key}) : super(key: key);
@@ -29,6 +32,16 @@ class _MechanicScreenState extends State<MechanicScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton.extended(
+        backgroundColor: Color(0xFF39ACE7),
+        onPressed: () {
+          // Provider.of<GetCurrentLocationClassForFirstMapPage>(context,
+          //         listen: false)
+          //     .stopListeningForLocationUpdatesForFirstMapPage();
+          Navigator.pushNamed(context, '/mechanicOnlineMapScreen');
+        },
+        label: const Text('Go Online'),
+      ),
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 57, 172, 231),
         automaticallyImplyLeading: false,
@@ -182,6 +195,7 @@ class _MechanicScreenState extends State<MechanicScreen> {
             ),
           ),
         ),
+
       ),
     );
   }

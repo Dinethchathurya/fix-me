@@ -13,9 +13,11 @@ class TaskData extends ChangeNotifier {
 
   getUsersLocationData() async {
     GetCurrentLocationClass getLocationClass = GetCurrentLocationClass();
-    await getLocationClass.getCurrentUserLocation();
-    currentLogUserLatitude = await getLocationClass.currentLogUserLatitude;
-    currentLogUserLongitude = await getLocationClass.currentLogUserLongitude;
+    // await getLocationClass.getCurrentUserLocation();
+    currentLogUserLatitude =
+        await getLocationClass.currentLogUserLatitude ?? 0.0;
+    currentLogUserLongitude =
+        await getLocationClass.currentLogUserLongitude ?? 0.0;
 
     GetMechanicLocation getMechanicLocation = GetMechanicLocation();
     await getMechanicLocation.getMechanicLocationMethod();
@@ -28,5 +30,16 @@ class TaskData extends ChangeNotifier {
     // await getLocationClass.genaratePolyLineFromPoints(polyLineCordinates);
     //
     // polylinesInTaskData = await getLocationClass.polylines;
+  }
+
+  getLoggedUsersLocation() async {
+    // this method for current user map screen only
+    GetCurrentLocationClass getLocationClass = GetCurrentLocationClass();
+    // await getLocationClass.getCurrentUserLocation();
+
+    currentLogUserLatitude =
+        await getLocationClass.currentLogUserLatitude ?? 0.0;
+    currentLogUserLongitude =
+        await getLocationClass.currentLogUserLongitude ?? 0.0;
   }
 }
