@@ -25,7 +25,7 @@ class _RatingBottomSheetState extends State<RatingBottomSheet> {
     return [
       CircleAvatar(
         radius: 50.0,
-        backgroundImage: AssetImage('assets/profile_photo.jpg'),
+        //   backgroundImage: AssetImage('asset/img/img.jpg'),
       ),
       SizedBox(height: 20.0),
       Text(
@@ -62,7 +62,7 @@ class _RatingBottomSheetState extends State<RatingBottomSheet> {
   List<Widget> _buildRatingView() {
     return [
       Text(
-        'Rate the garage mechanic's service quality',
+        "Rate the garage mechanic's service quality",
         style: TextStyle(
           fontSize: 20.0,
           fontWeight: FontWeight.bold,
@@ -100,7 +100,8 @@ class _RatingBottomSheetState extends State<RatingBottomSheet> {
   }
 
   Widget buildStar(int index, String text) {
-    IconData iconData = index <= _selectedRating ? Icons.star : Icons.star_border;
+    IconData iconData =
+        index <= _selectedRating ? Icons.star : Icons.star_border;
     return Column(
       children: [
         IconButton(
