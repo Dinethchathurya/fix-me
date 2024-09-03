@@ -62,7 +62,7 @@ class _RatingBottomSheetState extends State<RatingBottomSheet> {
   List<Widget> _buildRatingView() {
     return [
       Text(
-        'Rate the garage mechanic's service quality',
+        'Rate the garage mechanic\'s service quality',
         style: TextStyle(
           fontSize: 20.0,
           fontWeight: FontWeight.bold,

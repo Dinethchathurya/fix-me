@@ -10,25 +10,26 @@ class DrawPolyline {
   var nearestMechanicLocationLongitude;
   var googleApiKey = 'AIzaSyDNwmSnZ9YxQmGDuAdFnDhp2RiF_OYAPH4';
 
-  Future<List<LatLng>> getPolylinePoints() async {
-    List<LatLng> polyLineCordinates = [];
-    PolylinePoints polylinePoints = PolylinePoints();
-    PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
-      googleApiKey,
-      PointLatLng(currentLogUserLatitude, currentLogUserLongitude),
-      PointLatLng(
-          nearestMechanicLocationLatitude, nearestMechanicLocationLongitude),
-      travelMode: TravelMode.driving,
-    );
-    if (result.points.isNotEmpty) {
-      result.points.forEach((PointLatLng point) {
-        polyLineCordinates.add(LatLng(point.latitude, point.longitude));
-      });
-    } else {
-      print(result.errorMessage);
-    }
-    return polyLineCordinates;
-  }
+  // this need to anable
+  // Future<List<LatLng>> getPolylinePoints() async {
+  //   List<LatLng> polyLineCordinates = [];
+  //   PolylinePoints polylinePoints = PolylinePoints();
+  //   PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
+  //     googleApiKey,
+  //     PointLatLng(currentLogUserLatitude, currentLogUserLongitude),
+  //     PointLatLng(
+  //         nearestMechanicLocationLatitude, nearestMechanicLocationLongitude),
+  //     travelMode: TravelMode.driving,
+  //   );
+  //   if (result.points.isNotEmpty) {
+  //     result.points.forEach((PointLatLng point) {
+  //       polyLineCordinates.add(LatLng(point.latitude, point.longitude));
+  //     });
+  //   } else {
+  //     print(result.errorMessage);
+  //   }
+  //   return polyLineCordinates;
+  // }
 
   genaratePolyLineFromPoints(List<LatLng> polyLineCordinates) {
     PolylineId Id = PolylineId('poly');
